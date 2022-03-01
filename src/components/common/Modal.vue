@@ -1,3 +1,4 @@
+<!--알림창-->
 <template>
   <transition name="modal">
     <div class="modal-mask">
@@ -15,7 +16,7 @@
   </transition>
 </template>
 
-<style>
+<style scoped>
 .modal-mask {
   position: fixed;
   z-index: 9998;
