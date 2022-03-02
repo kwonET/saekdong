@@ -7,13 +7,13 @@
           <h3 class="chooseEng">Choose your language.</h3>
         </div>
         <div class="engkorBtn">
-          <button class="Btn" @click="KorClk()">
+          <button class="Btn" @click="KorClk()" :class="{select: KorClicked}">
               <span>
               한국어
               </span>
               <i v-show="KorClicked" class="fa-solid fa-check"></i>
           </button>
-          <button class="Btn" @click="EngClk()">
+          <button class="Btn" @click="EngClk()" :class="{select: EngClicked}">
               <span>
               English
               </span>
@@ -75,7 +75,7 @@ body{
   text-align: center;
 }
 .chooseTxt{
-  font-family: Gothic A1;
+  /* font-family: Gothic A1; */
   font-style: normal;
   font-weight: 500;
   line-height: 32px;
@@ -106,7 +106,7 @@ body{
   height:8.7473vh;
 
   color: #000000;
-  font-family: Gothic A1;
+  /* font-family: Gothic A1; */
   font-style: normal;
   font-weight: bold;
   font-size: 4.6729vw;
@@ -120,11 +120,13 @@ body{
   justify-content: space-between;
   margin-bottom:0.8639vh;
   padding-left:9.8131vw;
+
+  cursor: pointer;
 }
 span{
   text-align: left;
 }
-.Btn:focus{
+.Btn.select {
   background: #474A57;
   box-shadow: 0px 10px 15px 3px rgba(0, 0, 0, 0.25);
   border-radius: 6px;

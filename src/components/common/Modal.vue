@@ -47,12 +47,12 @@
   align-items: center ;
 }
 .modal-header{
-  font-family: Gothic A1;
+  /* font-family: Gothic A1; */
   font-style: normal;
   font-weight: bold;  
   font-size: 1.4039vh;
-  line-height: 1.7279vh;
-  letter-spacing: -0.2336vw;
+  /* line-height: 1.7279vh;
+  letter-spacing: -0.2336vw; */
   /* display:flex; */
   color: #FF337A;
   margin:0 auto;
