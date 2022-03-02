@@ -42,7 +42,7 @@
     name:'Home',
     data(){
       return{
-        showModal
+        showModal: false
       }
     },
     // 모바일접속여부를 확인하는 메소드
@@ -57,10 +57,12 @@
     },
     //2초 후 자동 라우팅
     mounted() {
-    setTimeout(() => {
-        // You can also use replace() instead of push()
-        this.$router.push('/lang');
-    }, 2000);
+      this.isMobile()
+      if (!this.showModal) {
+        setTimeout(() => {
+            this.$router.push('/lang');
+        }, 2000);
+      }
     },
     // created() {
     // // Use in js
@@ -118,7 +120,7 @@ img {
   margin-bottom:3.2397vh;
 
   font-style: normal;
-  font-family: Gothic A1;
+  /* font-family: Gothic A1; */
   text-align: center;
   letter-spacing: -0.3505vw;
 
