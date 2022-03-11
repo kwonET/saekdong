@@ -19,7 +19,7 @@
 
 <script>
   import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
-  import 'swiper/css/swiper.css'
+  import 'swiper/swiper-bundle.css'
   export default {
     name: 'swiper-example-navigation',
     title: 'Navigation',
@@ -41,5 +41,5 @@
 </script>
 
 <style lang="scss" scoped>
-  @import './base.scss';
+  // @import './base.scss';
 </style>
