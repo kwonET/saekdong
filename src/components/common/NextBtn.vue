@@ -1,7 +1,7 @@
 <!--한영페이지부터 쓰일 다음 버튼 컴포넌트-->
 <template>
-  <div class="nextBtnContainer">
-      <span class="NextBtn" v-on:click="NextPage">
+  <div class="nextBtnContainer" v-on:click="NextPage">
+      <span class="NextBtn">
         다음
       </span>
   </div>
@@ -20,18 +20,21 @@ export default {
 
 <style scoped>
 .nextBtnContainer{
-  width:71.0280vw;
-  height:7.0194vh;
+  /* width: 304px;
+  height: 65px; */
   margin:26.4579vh auto;
+  min-height:60px; flex-basis: 65px;
+
   background: #474A57;
   border-radius: 3.5097vh;
   display:flex;
   align-items: center;
+  cursor:pointer;
 }
 
 .NextBtn{
     margin:0 auto;
-    font-family: Gothic A1;
+    /* font-family: Gothic A1; */
     font-style: normal;
     font-weight: bold;
     font-size: 4.2056vw;

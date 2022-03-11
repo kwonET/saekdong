@@ -1,55 +1,45 @@
-<!--carousel 틀만 잡고 구체적인 작업은 진행하지 않았습니다. 이 파일은 후에 코드리뷰 받도록 하겠습니다. -->
+
 
 <template>
-<div id="app">
-    <div class="container">
-        <carousel>
-            <slide id=carslide class="slide1">
-                Slide 1 Content
-            </slide>
-            <slide id=carslide class="slide2">
-                Slide 2 Content
-            </slide>
-            <slide id=carslide class="slide3">
-                Slide 3 Content
-            </slide>
-            <slide id=carslide class="slide4">
-                Slide 4 Content
-            </slide>
-        </carousel>
-    </div>
-</div>
+  <swiper class="swiper" :options="swiperOption">
+    <swiper-slide>Slide 1</swiper-slide>
+    <swiper-slide>Slide 2</swiper-slide>
+    <swiper-slide>Slide 3</swiper-slide>
+    <swiper-slide>Slide 4</swiper-slide>
+    <swiper-slide>Slide 5</swiper-slide>
+    <swiper-slide>Slide 6</swiper-slide>
+    <swiper-slide>Slide 7</swiper-slide>
+    <swiper-slide>Slide 8</swiper-slide>
+    <swiper-slide>Slide 9</swiper-slide>
+    <swiper-slide>Slide 10</swiper-slide>
+    <div class="swiper-button-prev" slot="button-prev"></div>
+    <div class="swiper-button-next" slot="button-next"></div>
+  </swiper>
 </template>
 
 <script>
-import { Carousel, Slide } from 'vue-carousel';
-
-export default {
-  components: {
-    Carousel,
-    Slide
+  import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
+  import 'swiper/css/swiper.css'
+  export default {
+    name: 'swiper-example-navigation',
+    title: 'Navigation',
+    components: {
+      Swiper,
+      SwiperSlide
+    },
+    data() {
+      return {
+        swiperOption: {
+          navigation: {
+            nextEl: '.swiper-button-next',
+            prevEl: '.swiper-button-prev'
+          }
+        }
+      }
+    }
   }
-}
 </script>
 
-<style scoped>
-#app{
-    position: absolute;
-    top:0;
-    left:0;
-    width:100vw;
-    height:100vh;
-    background-color: #FDD170;
-}
-.container{
-    text-align: center;
-    margin: 31.8575vh auto;
-}
-.carslider {
-    margin:auto 14.0187vw;
-    width:100%;
-    border: black;
-    text-align: center;
-}
-
+<style lang="scss" scoped>
+  @import './base.scss';
 </style>

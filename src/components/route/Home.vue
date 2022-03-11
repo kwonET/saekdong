@@ -1,7 +1,7 @@
 <!--1. 랜딩페이지-->
 
 <template>
-  <div id="app">
+  <div id="home">
     <Modal v-if="showModal" @close="showModal=false">
     <!-- <Modal v-if="$isMobile()"> -->
       <!--
@@ -42,7 +42,8 @@
     name:'Home',
     data(){
       return{
-        showModal
+        // showModal:false // 실제 코드
+        showModal:true // 테스트용
       }
     },
     // 모바일접속여부를 확인하는 메소드
@@ -57,10 +58,13 @@
     },
     //2초 후 자동 라우팅
     mounted() {
-    setTimeout(() => {
-        // You can also use replace() instead of push()
-        this.$router.push('/lang');
-    }, 2000);
+      this.isMobile()
+      if(!this.showModal){
+        setTimeout(() => {
+            // You can also use replace() instead of push()
+            this.$router.push('/lang');
+        }, 2000);
+      }
     },
     // created() {
     // // Use in js
@@ -85,7 +89,7 @@
 body{
   margin:0;
 }
-#app{
+#home{
   position: absolute;
   top:0;
   left:0;
@@ -118,7 +122,7 @@ img {
   margin-bottom:3.2397vh;
 
   font-style: normal;
-  font-family: Gothic A1;
+  /* font-family: Gothic A1; */
   text-align: center;
   letter-spacing: -0.3505vw;
 

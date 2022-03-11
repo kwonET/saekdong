@@ -1,29 +1,31 @@
 <!--2. 한영 선택 페이지-->
 <template>
-  <div id="app">
-      <div class="chooseContainer">
-        <div class="chooseTxt">
-          <h3 class="chooseKor">언어를 선택해주세요.</h3>
-          <h3 class="chooseEng">Choose your language.</h3>
+  <div id="lang">
+      <div class="container">
+        <div class="choose-container">
+          <div class="txt-container">
+            <h3 class="kor-txt">언어를 선택해주세요.</h3>
+            <h3 class="eng-txt">Choose your language.</h3>
+          </div>
+          <div class="btn-container">
+            <button class="Btn" @click="KorClk()" :class="{select:korClicked}">
+                <span>
+                한국어
+                </span>
+                <i v-show="KorClicked" class="fa-solid fa-check"></i>
+            </button>
+            <button class="Btn" @click="EngClk()" :class="{select:EngClicked}">
+                <span>
+                English
+                </span>
+                <i v-show="EngClicked" class="fa-solid fa-check"></i>
+            </button>
+          </div>
         </div>
-        <div class="engkorBtn">
-          <button class="Btn" @click="KorClk()">
-              <span>
-              한국어
-              </span>
-              <i v-show="KorClicked" class="fa-solid fa-check"></i>
-          </button>
-          <button class="Btn" @click="EngClk()">
-              <span>
-              English
-              </span>
-              <i v-show="EngClicked" class="fa-solid fa-check"></i>
-          </button>
-        </div>
+          <!-- 다음버튼 -->
+        <NextBtn v-on:toNext="toNextPage"></NextBtn>
       </div>
       
-        <!-- 다음버튼 -->
-      <NextBtn v-on:toNext="toNextPage"></NextBtn>
   </div>
 </template>
 
@@ -60,22 +62,31 @@ export default {
 body{
   margin:0;
 }
-#app{
+#lang{
   position: absolute;
   top:0;
   left:0;
   width:100vw;
   height:100vh;
   background-color: #FDD170;
-}
-.chooseContainer{
-  margin-top: 23.1102vh;
   display: flex;
+  align-items:center;
+  justify-content: center;
+}
+.container{
+  /* margin-top: 23.1102vh; */
   flex-direction: column;
   text-align: center;
+  justify-content: space-around;
+  flex-basis: 653px;
 }
-.chooseTxt{
-  font-family: Gothic A1;
+
+.choose-container{
+  /*한영선택 부분 크기 설정*/
+  flex-basis: 343px;
+}
+.txt-container{
+  /* font-family: Gothic A1; */
   font-style: normal;
   font-weight: 500;
   line-height: 32px;
@@ -86,13 +97,13 @@ body{
 
   color: #000000;
 }
-.chooseKor{
+.kor-txt{
   font-size:6.0748vw;
 }
-.chooseEng{
+.eng-txt{
   font-size:5.1402vw;
 }
-.engkorBtn{
+.btn-container{
   width:67.5234vw;
   margin:0 auto;
   margin-top:9.5032vh;
@@ -100,13 +111,15 @@ body{
   flex-direction: column;
 }
 .Btn{
+  /* 1. unselected btn style */
   background: #ffffff;
   border: none;
   border-radius: 6px;
   height:8.7473vh;
 
   color: #000000;
-  font-family: Gothic A1;
+
+  /* 2. common btn style */
   font-style: normal;
   font-weight: bold;
   font-size: 4.6729vw;
@@ -120,18 +133,22 @@ body{
   justify-content: space-between;
   margin-bottom:0.8639vh;
   padding-left:9.8131vw;
+
+  cursor: pointer;
 }
 span{
   text-align: left;
 }
-.Btn:focus{
-  background: #474A57;
+.Btn:select{
+    /* 2. unselected btn style */
+  background-color: #474A57;
   box-shadow: 0px 10px 15px 3px rgba(0, 0, 0, 0.25);
   border-radius: 6px;
   height:8.7473vh;
 
   color: rgba(255, 255, 255, 0.9);
 }
+
 .Btn>i{
   font-size: 4.6729vw;
   /* margin-left:31.5421vw; */
