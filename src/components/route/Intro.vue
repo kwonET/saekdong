@@ -1,45 +1,59 @@
 
-
 <template>
-  <swiper class="swiper" :options="swiperOption">
-    <swiper-slide>Slide 1</swiper-slide>
-    <swiper-slide>Slide 2</swiper-slide>
-    <swiper-slide>Slide 3</swiper-slide>
-    <swiper-slide>Slide 4</swiper-slide>
-    <swiper-slide>Slide 5</swiper-slide>
-    <swiper-slide>Slide 6</swiper-slide>
-    <swiper-slide>Slide 7</swiper-slide>
-    <swiper-slide>Slide 8</swiper-slide>
-    <swiper-slide>Slide 9</swiper-slide>
-    <swiper-slide>Slide 10</swiper-slide>
-    <div class="swiper-button-prev" slot="button-prev"></div>
-    <div class="swiper-button-next" slot="button-next"></div>
-  </swiper>
+  <div id="intro">
+      <CardList />
+      <!-- <NextBtn v-on:toNext="toNextPage"></NextBtn> -->
+  </div>
 </template>
 
 <script>
-  import { Swiper, SwiperSlide } from 'vue-awesome-swiper'
-  import 'swiper/swiper-bundle.css'
-  export default {
-    name: 'swiper-example-navigation',
-    title: 'Navigation',
-    components: {
-      Swiper,
-      SwiperSlide
+import CardList from "../common/CardList.vue"
+import NextBtn from '../common/NextBtn.vue'
+
+export default {
+    components:{
+        CardList,
+        NextBtn
     },
-    data() {
-      return {
-        swiperOption: {
-          navigation: {
-            nextEl: '.swiper-button-next',
-            prevEl: '.swiper-button-prev'
-          }
-        }
-      }
+    methods:{
+    toNextPage(){
+      this.$router.replace('/letter');
     }
-  }
+    }
+}
 </script>
 
 <style lang="scss" scoped>
-  // @import './base.scss';
+    * {
+    font-size: 1rem;
+    margin: 0;
+    padding: 0;
+  }
+  h1 {
+    font-size: 2rem;
+    padding-left: 40px;
+  }
+  body {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #333;
+    
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 22px;
+    text-align: center;
+    letter-spacing: -1.5px;
+
+    color: #000000;
+  }
+
+  #intro {
+    position: relative;
+    padding: 20px 0;
+    overflow: hidden;
+  }
 </style>
+
+

@@ -79,6 +79,7 @@ body{
   text-align: center;
   justify-content: space-around;
   flex-basis: 653px;
+
 }
 
 .choose-container{

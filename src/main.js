@@ -12,6 +12,7 @@ import 'swiper/swiper-bundle.css'
 // import style (<= Swiper 5.x)
 // import 'swiper/css/swiper.css'
 Vue.use(VueAwesomeSwiper, /* { default options with global component } */)
+
 // import VueCarousel from 'vue-carousel'
 // Vue.use(VueCarousel)
 /*---------------------------*/
@@ -20,6 +21,7 @@ import App from './App.vue' // 라우팅 페이지 viewer app
 import Home from './components/route/Home.vue' // 라우팅 대상 페이지
 import Lang from './components/route/EngKor.vue' // 라우팅 대상 페이지
 import Intro from './components/route/Intro.vue'
+import Letter from './components/route/Letter.vue'
 import store from './store'
 
 const routes = [ // 라우트 설정
@@ -27,6 +29,7 @@ const routes = [ // 라우트 설정
     { path: '/home', component: Home },
     { path: '/lang', component: Lang },
     { path: '/intro', component: Intro},
+    { path: '/letter', component: Letter },
 ]
 const router = new VueRouter({
     mode: 'history',

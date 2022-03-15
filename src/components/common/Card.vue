@@ -20,25 +20,26 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
 .card{
     position:relative;
     width:100%;
     height:600px;
-    background-color: #efefef;
-    overflow: hidden;
+    background-color: none;
+    // overflow: hidden;
 }
 .img{
     width:100%;
     height:600px;
     background-position: center;
-    background-size:cover;
+    background-size:contain;
+    background-repeat: no-repeat;
 }
 .description{
     position:absolute;
     top:50px;
     padding:5px 20px;
-    width:calc(100%-20px);
+    width:calc(100% - 20px);
     height:40px;
     font-size:1.6rem;
     color:#333;     

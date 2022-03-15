@@ -5,7 +5,6 @@
             :key="index">
             <Card :item="card" 
                 :active="index==currentIndex"/>
-
           </li>
       </ul>
   </div>
@@ -65,17 +64,19 @@ export default {
 }
 </script>
 
-<style scoped>
-    .card-list{
-        margin: 0 30px;
-    }
+<style lang="scss" scoped>
+.card-list {
+    margin: 0 30px;
+
     ul{
         display: flex;
         list-style: none;
+        // margin:14.0187vw;
     }
     li{
         width:100%;
-        padding:10px;
+        // margin:14.0187vw;
         transition: all .5s ease;
+    }
     }
 </style>

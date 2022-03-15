@@ -23,7 +23,8 @@ export default {
   /* width: 304px;
   height: 65px; */
   margin:26.4579vh auto;
-  min-height:60px; flex-basis: 65px;
+  min-height:140px; 
+  flex-basis: 150px;
 
   background: #474A57;
   border-radius: 3.5097vh;
