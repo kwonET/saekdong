@@ -2,7 +2,7 @@
 <template>
   <div id="intro">
       <CardList />
-      <!-- <NextBtn v-on:toNext="toNextPage"></NextBtn> -->
+      <NextBtn v-on:toNext="toNextPage"></NextBtn>
   </div>
 </template>
 
@@ -16,9 +16,9 @@ export default {
         NextBtn
     },
     methods:{
-    toNextPage(){
-      this.$router.replace('/letter');
-    }
+      toNextPage(){
+        this.$router.replace('/letter');
+      }
     }
 }
 </script>

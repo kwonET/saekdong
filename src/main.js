@@ -22,6 +22,7 @@ import Home from './components/route/Home.vue' // 라우팅 대상 페이지
 import Lang from './components/route/EngKor.vue' // 라우팅 대상 페이지
 import Intro from './components/route/Intro.vue'
 import Letter from './components/route/Letter.vue'
+import Letter2 from './components/route/Letter2.vue'
 import store from './store'
 
 const routes = [ // 라우트 설정
@@ -30,6 +31,7 @@ const routes = [ // 라우트 설정
     { path: '/lang', component: Lang },
     { path: '/intro', component: Intro},
     { path: '/letter', component: Letter },
+    { path: '/letter2', component: Letter2 },
 ]
 const router = new VueRouter({
     mode: 'history',

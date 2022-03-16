@@ -3,7 +3,7 @@
   <div class="all-container">
     <div class="lett-container">
       <div class="text-container">
-        <h3>염원 메세지를 써주세요.</h3>
+        <span>염원 메세지를 써주세요.</span>
       </div>
     
       <div class="z-container">
@@ -11,30 +11,54 @@
           <img src='../../assets/letter.png' alt="">
         </div>
         <div class="input-container">
-          <input type="text" class="letter-input">
+          <Input v-on:addInputItem="addOneItem"></Input>
+          <!-- <input type="text" v-model="newInputItem" v-on:keyup.enter="addInput" class="letter-input"> -->
         </div>
       </div>
     </div>
-
     <NextBtn v-on:toNext="toNextPage"></NextBtn>
   </div>
 </div>
 </template>
 
 <script>
-import nextBtn from '../common/NextBtn.vue'
+import NextBtn from '../common/NextBtn.vue'
+import Input from '../common/Input.vue'
+
 export default {
-  components:{
-    nextBtn
+  data(){
+    return{
+      inputItems:[]
+    }
   },
   methods:{
+    addOneItem(inputItem){
+      const obj={completed:false,item:inputItem};
+      localStorage.setItem(inputItem,JSON.stringify(obj));
+      this.inputItems.push(obj);
+    },
     toNextPage(){
-      this.$router.replace('/intro');
+      this.$router.replace('/letter2');
     }
-  }
+  },
+  created(){
+    if(localStorage.length>0){
+      for(let i=0;i<localStorage.length;i++){
+        if(localStorage.key(i)!=='loglevel:webpack-dev-server'){
+          this.inputItems.push(JSON.parse(localStorage.getItem(localStorage.key(i))));
+        }
+      }
+    }
+  },
+  components:{
+    NextBtn,
+    Input
+  },
 }
 </script>
+
 <style>
+
 body{
   margin:0;
 }
@@ -67,11 +91,11 @@ body{
 .text-container {
   margin-bottom: 7.0194vh;
 }
-.text-container > h3{
+span{
   font-family: 'Gothic A1';
   font-style: normal;
   font-weight: 700;
-  font-size: 24px;
+  font-size: 5.6075vw;
   line-height: 30px;
   /* identical to box height */
 
@@ -103,12 +127,11 @@ body{
   font-family: 'Gothic A1';
   font-style: normal;
   font-weight: 500;
-  font-size: 18px;
+  font-size: 3.2056vw;
   line-height: 22px;
   text-align: center;
   letter-spacing: -1.5px;
 
   color: #000000;
 }
-
 </style>

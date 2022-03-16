@@ -22,10 +22,9 @@ export default {
 .nextBtnContainer{
   /* width: 304px;
   height: 65px; */
-  margin:26.4579vh auto;
+  margin-top:5.3996vh;
+  min-width: 700px;
   min-height:140px; 
-  flex-basis: 150px;
-
   background: #474A57;
   border-radius: 3.5097vh;
   display:flex;
@@ -34,6 +33,7 @@ export default {
 }
 
 .NextBtn{
+    flex-basis: 150px;
     margin:0 auto;
     /* font-family: Gothic A1; */
     font-style: normal;

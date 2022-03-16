@@ -108,6 +108,7 @@ body{
   width:67.5234vw;
   margin:0 auto;
   margin-top:9.5032vh;
+  margin-bottom:24vh;
   display: flex;
   flex-direction: column;
 }
