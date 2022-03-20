@@ -2,10 +2,10 @@
   <div class="card-list">
       <ul :style="listLength">
           <li v-for="(card, index) in cards"
-            :key="index">
+            :key="index" :style="listPosition">
             <Card :item="card" 
                 :active="index==currentIndex"/>
-          </li>
+          </li>        
       </ul>
   </div>
 </template>
@@ -16,8 +16,8 @@ export default {
     data:()=>{
         return{
             touch:{
-                startX:0,
-                endX:0
+                startX:0, //터치 시작 지점
+                endX:0 //터치 종료 지점
             }
         }
     },
@@ -31,6 +31,7 @@ export default {
       listLength() {
         return { width: this.cards.length * 100 + '%' };
       },
+      // x축 방향으로 움직이게 함
       listPosition() {
         return { transform: 'translateX(-'+ this.currentIndex * 100 +'%)' };
       }
@@ -40,13 +41,14 @@ export default {
     },
     methods: {
       touchstart(event) {
-        this.touch.startX = event.touches[0].clientX;
+        this.touch.startX = event.touches[0].clientX; //event로 좌표 파악
         this.touch.endX = 0;
       },
       touchmove(event) {
         this.touch.endX = event.touches[0].clientX;
       },
       touchend() {
+        // 터치에 민감하지 않도록 해주는 if 문
         if(!this.touch.endX || Math.abs(this.touch.endX - this.touch.startX) < 20)
           return;
           
@@ -66,17 +68,20 @@ export default {
 
 <style lang="scss" scoped>
 .card-list {
-    margin: 0 30px;
+    // margin: 50px 20px;
+    text-align: center;
 
     ul{
         display: flex;
         list-style: none;
+        padding:0;
         // margin:14.0187vw;
     }
     li{
         width:100%;
         // margin:14.0187vw;
         transition: all .5s ease;
+        margin:0 auto;
     }
     }
 </style>

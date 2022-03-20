@@ -1,10 +1,12 @@
 <!--한영페이지부터 쓰일 다음 버튼 컴포넌트-->
 <template>
+<div class="containter">
   <div class="nextBtnContainer" v-on:click="NextPage">
       <span class="NextBtn">
         다음
       </span>
   </div>
+</div>
 </template>
 
 
@@ -19,21 +21,28 @@ export default {
 </script>
 
 <style scoped>
+.container{
+  width:100%;
+}
+
 .nextBtnContainer{
-  /* width: 304px;
-  height: 65px; */
-  margin-top:5.3996vh;
-  min-width: 700px;
-  min-height:140px; 
-  background: #474A57;
-  border-radius: 3.5097vh;
+  margin:0 auto;
+  width: 700px;
+  height: 135px;
+
   display:flex;
   align-items: center;
+  /* justify-items: center; */
+  /* align-content: center; */
+  justify-content: space-around;
+
+  background: #474A57;
+  border-radius: 3.5097vh;
   cursor:pointer;
 }
 
 .NextBtn{
-    flex-basis: 150px;
+    /* flex-basis: 150px; */
     margin:0 auto;
     /* font-family: Gothic A1; */
     font-style: normal;

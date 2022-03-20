@@ -1,9 +1,16 @@
 
 <template>
   <div id="intro">
-      <CardList />
-      <NextBtn v-on:toNext="toNextPage"></NextBtn>
+    <!-- <div class="all-container"> -->
+      <div class="carousel">
+        <CardList />
+      </div>
+      <div class="next-btn">
+        <NextBtn v-on:toNext="nextCard()"></NextBtn>
+      </div>
+    <!-- </div> -->
   </div>
+
 </template>
 
 <script>
@@ -15,45 +22,69 @@ export default {
         CardList,
         NextBtn
     },
+    computed:{
+        currentIndex() {
+            return this.$store.getters.currentIndex;
+        },
+    },
     methods:{
-      toNextPage(){
-        this.$router.replace('/letter');
+      nextCard(){
+        if(this.currentIndex!=3)
+          this.$store.commit('nextCard');
+        else
+          this.$router.replace('/letter');
       }
+    },
+    mounted() {
+      this.$el.addEventListener('nextCard', event => this.nextCard(event));
     }
 }
 </script>
 
 <style lang="scss" scoped>
-    * {
-    font-size: 1rem;
-    margin: 0;
-    padding: 0;
-  }
-  h1 {
-    font-size: 2rem;
-    padding-left: 40px;
-  }
-  body {
-    width: 100%;
-    margin: 0;
-    padding: 0;
-    background-color: #333;
-    
-    font-style: normal;
-    font-weight: 500;
-    font-size: 18px;
-    line-height: 22px;
-    text-align: center;
-    letter-spacing: -1.5px;
-
-    color: #000000;
-  }
-
-  #intro {
-    position: relative;
-    padding: 20px 0;
-    overflow: hidden;
-  }
+* {
+  font-size: 1rem;
+}
+body{
+  margin:0;
+}
+#intro{
+  position: absolute;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background-color: #FDD170;
+}
+// .all-container {
+//   display: flex;
+//   height:100vh;
+//   flex-basis: 100vh;
+//   flex-direction: column;
+//   align-items: center;
+//   justify-content: center;
+// }
+.carousel {
+  position: relative;
+  padding: 25vh 0;
+  overflow: hidden;
+}
 </style>
 
-
+#lett{
+  // position: absolute;
+  // top:0;
+  // left:0;
+  // width:100%;
+  // height:100%;
+  background-color: #FDD170;
+}
+.all-container{
+  display: flex;
+  height:100vh;
+  flex-basis: 100vh;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* flex-basis: 524px; */
+}

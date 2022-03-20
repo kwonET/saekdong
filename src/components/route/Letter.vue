@@ -1,24 +1,26 @@
 <template>
-<div id="lett">
-  <div class="all-container">
-    <div class="lett-container">
-      <div class="text-container">
-        <span>염원 메세지를 써주세요.</span>
-      </div>
-    
-      <div class="z-container">
-        <div class="img-container">
-          <img src='../../assets/letter.png' alt="">
+  <div id="lett">
+    <div class="all-container">
+      <div class="lett-container">
+        <div class="text-container">
+          <span v-if="this.language=='ko'">염원 메세지를 써주세요.</span>
+          <span v-if="this.language=='en'">Write down your wish.</span>
         </div>
-        <div class="input-container">
-          <Input v-on:addInputItem="addOneItem"></Input>
-          <!-- <input type="text" v-model="newInputItem" v-on:keyup.enter="addInput" class="letter-input"> -->
+      
+        <div class="z-container">
+          <div class="img-container">
+            <img src='../../assets/letter.png' alt="">
+          </div>
+          <div class="input-container">
+            <Input v-on:addInputItem="addOneItem"></Input>
+            <!-- <input type="text" v-model="newInputItem" v-on:keyup.enter="addInput" class="letter-input"> -->
+          </div>
         </div>
       </div>
+
+      <NextBtn v-on:toNext="toNextPage"></NextBtn>
     </div>
-    <NextBtn v-on:toNext="toNextPage"></NextBtn>
   </div>
-</div>
 </template>
 
 <script>
@@ -28,8 +30,13 @@ import Input from '../common/Input.vue'
 export default {
   data(){
     return{
-      inputItems:[]
+      inputItems:[],
     }
+  },
+  computed:{
+    language(){
+      return this.$store.state.language;
+    },
   },
   methods:{
     addOneItem(inputItem){
@@ -39,7 +46,7 @@ export default {
     },
     toNextPage(){
       this.$router.replace('/letter2');
-    }
+    },
   },
   created(){
     if(localStorage.length>0){
@@ -57,8 +64,17 @@ export default {
 }
 </script>
 
-<style>
-
+<style lang="scss" scoped>
+// *:lang(ko){
+//   *:not(:lang(ko)){
+//     display: none;
+//   }
+// }
+// *:lang(en){
+//   *:not(:lang(en)){
+//     display: none;
+//   }
+// }
 body{
   margin:0;
 }
@@ -66,8 +82,8 @@ body{
   position: absolute;
   top:0;
   left:0;
-  width:100vw;
-  height:100vh;
+  width:100%;
+  height:100%;
   background-color: #FDD170;
 }
 .all-container{

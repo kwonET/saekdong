@@ -22,10 +22,10 @@
             </button>
           </div>
         </div>
-          <!-- 다음버튼 -->
-        <NextBtn v-on:toNext="toNextPage"></NextBtn>
+
+        <!-- 다음버튼 -->
+      <NextBtn v-on:toNext="toNextPage"></NextBtn>
       </div>
-      
   </div>
 </template>
 
@@ -39,14 +39,24 @@ export default {
       EngClicked:false, KorClicked:false
     }
   },
+  computed:{
+    language(){
+      return this.$store.state.language;
+    }
+  },
   methods:{
+    updateLanguage(lang){
+      this.$store.commit('updateLanguage',lang)
+    },
     KorClk(){
       this.KorClicked=true
       this.EngClicked=false
+      this.$store.commit('updateLanguage','ko')
     },
     EngClk(){
       this.EngClicked=true
       this.KorClicked=false
+      this.$store.commit('updateLanguage','en')
     },
     toNextPage(){
         this.$router.replace('/intro');
@@ -69,21 +79,21 @@ body{
   width:100vw;
   height:100vh;
   background-color: #FDD170;
-  display: flex;
-  align-items:center;
-  justify-content: center;
 }
 .container{
-  /* margin-top: 23.1102vh; */
+  height:100%;
+  display: flex;
   flex-direction: column;
+  justify-content: center;
+  /* flex-direction: column;
   text-align: center;
   justify-content: space-around;
-  flex-basis: 653px;
-
+  flex-basis: 653px; */
 }
 
 .choose-container{
   /*한영선택 부분 크기 설정*/
+  margin:0 auto;
   flex-basis: 343px;
 }
 .txt-container{
