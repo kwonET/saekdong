@@ -14,6 +14,12 @@ export default {
             return this.$store.state.language;
         },
     },
+    mounted() {
+        setTimeout(() => {
+            // You can also use replace() instead of push()
+            this.$router.replace('/play2');
+        }, 2000);
+    },
 }
 </script>
 
@@ -27,9 +33,27 @@ body{
     left:0;
     width:100%;
     height:100%;
-    background-color: #FDD170;
+    background-color: #19A5E2;
 }
 .container{
+    height:80%;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+
+    text-align: center;
+    margin:20% auto;
+}
+span{
     margin:0 auto;
+
+    font-style: normal;
+    font-weight: 500;
+    font-size: 5.6075vw;
+    line-height: 4rem;
+    text-align: center;
+    letter-spacing: -1.5px;
+
+    color: #FFFFFF;
 }
 </style>

@@ -18,6 +18,7 @@ export default {
     },
 }
 </script>
+
 <style>
 *{
     font-family: 'Gothic A1', 'Source Han Sans', 'Noto Sans KR', 'Helvetica Neue', 'Arial', sans-serif;

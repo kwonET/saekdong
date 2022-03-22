@@ -3,7 +3,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Vuex from "vuex"
 Vue.use(VueRouter)
-
+import bus from './components/utils/bus.js'
 
 import App from './App.vue' // 라우팅 페이지 viewer app
 import Home from './components/route/Home.vue' // 라우팅 대상 페이지
@@ -23,8 +23,16 @@ const routes = [ // 라우트 설정
     { path: '/intro', component: Intro},
     { path: '/letter', component: Letter },
     { path: '/letter2', component: Letter2 },
-    { path: '/play', componnent: Play },
-    { path: '/play2', component: Play2 },
+    { path: '/play', component: Play },
+    { path: '/play2', 
+      component: Play2, 
+      // beforeEnter: (to,from,next) => {
+      //   bus.$emit('start:spinner');
+      //   store.dispatch('FETCH_LIST',to.Play)
+      //   .then(()=>next())
+      //   .catch(err => console.log(err));
+      // }
+    },
 ]
 const router = new VueRouter({
     mode: 'history',

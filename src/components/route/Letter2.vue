@@ -20,6 +20,7 @@
 
 <script>
 import NextBtn from "../common/NextBtn.vue"
+
 export default {
     computed:{
         language(){
@@ -90,7 +91,6 @@ body{
     height:60%;
 }
 .text-container> span{
-  font-family: 'Gothic A1';
   font-style: normal;
   font-weight: 700;
   font-size: 5.6075vw;

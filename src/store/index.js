@@ -6,6 +6,9 @@ Vue.use(Vuex);
 
 //export default new Vuex.Store(
 export default new Vuex.Store({
+    FETCH_LIST(){
+
+    },
     state:{
         language: 'ko',
         currentIndex:0,
