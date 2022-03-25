@@ -1,6 +1,10 @@
 # saekdong
 
-> saekdong ui frontend page
+> saekdong ui frontend page. 
+
+
+> figma site UI/UX : https://www.figma.com/proto/w2cSGdbxJiLFSGsHt0icxt/%EC%83%89%EB%8F%99?page-id=40%3A276&node-id=41%3A344&viewport=241%2C48%2C0.2&scaling=scale-down&starting-point-node-id=41%3A344
+
 
 ## Build Setup
 
