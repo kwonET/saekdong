@@ -13,6 +13,7 @@ import Letter from './components/route/Letter.vue'
 import Letter2 from './components/route/Letter2.vue'
 import Play from './components/route/Play.vue'
 import Play2 from './components/route/Play2.vue'
+import Test from './components/route/Test.vue'
 
 import store from './store'
 
@@ -25,7 +26,7 @@ const routes = [ // 라우트 설정
     { path: '/letter2', component: Letter2 },
     { path: '/play', component: Play },
     { path: '/play2', 
-      component: Play2, 
+      component: Play2
       // beforeEnter: (to,from,next) => {
       //   bus.$emit('start:spinner');
       //   store.dispatch('FETCH_LIST',to.Play)
@@ -33,6 +34,7 @@ const routes = [ // 라우트 설정
       //   .catch(err => console.log(err));
       // }
     },
+    { path: '/test', component: Test },
 ]
 const router = new VueRouter({
     mode: 'history',

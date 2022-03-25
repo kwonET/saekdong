@@ -18,6 +18,7 @@ export default {
         setTimeout(() => {
             // You can also use replace() instead of push()
             this.$router.replace('/play2');
+            // this.$router.replace('/test');
         }, 2000);
     },
 }

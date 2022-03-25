@@ -1,7 +1,7 @@
 <template>
   <div id="loading">
   <!-- <div class="lds-facebook" v-if="loading">          -->
-    <div class="spinner"  v-if="loading"></div>          
+    <div class="spinner"  v-if="loading"></div>  
     <!-- <div>
     </div>
     <div>
@@ -12,13 +12,14 @@
 </template>
 
 <script>
-export default {
-  props: {
+    export default {
+    props: {
     loading: {                                                
-      type: Boolean,
-      required: true,
+        type: Boolean,
+        required: true,
     },
-  },
+    },
+    
 }
 </script>
 

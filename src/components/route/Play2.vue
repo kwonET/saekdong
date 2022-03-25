@@ -28,6 +28,13 @@ export default {
             this.LoadingStatus=false;
         }
     },
+    mounted() {
+        setTimeout(() => {
+            // You can also use replace() instead of push()
+            this.$router.replace('/test');
+            // this.$router.replace('/test');
+        }, 2000);
+    },
     // created(){
     //     bus.$on('start:spinner', this.startSpinner);
     //     but.$on('end:spinner',this.endSpinner);
