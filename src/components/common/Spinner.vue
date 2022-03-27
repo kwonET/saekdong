@@ -1,7 +1,14 @@
 <template>
   <div id="loading">
   <!-- <div class="lds-facebook" v-if="loading">          -->
-    <div class="spinner"  v-if="loading"></div>  
+    <!-- <img class="spinner" src="../../assets/ring.png" alt=""> -->
+    <div class="spinner-container2" v-if="loading===true">
+      <img class="spinner" src="../../assets/ring.png" alt="">
+    </div>
+
+    <div class="spinner-container1" v-if="loading===true">
+      <img  class="spinner_fill" src="../../assets/ring_fill.png" alt="" >
+    </div>  
     <!-- <div>
     </div>
     <div>
@@ -14,43 +21,62 @@
 <script>
     export default {
     props: {
-    loading: {                                                
-        type: Boolean,
-        required: true,
-    },
+      loading: {                                                
+          type: Boolean,
+          required: true,
+      },
     },
     
 }
 </script>
 
 <style>
-#loading{
-    /* display:none; */
-    width:100%;
-    height:100%;
-    position:absolute;
-    top:0;
-    left:0;
+.spinner_container2{
+  position:relative;
+  z-index: 10;
 }
-@keyframes spinner{
-    from {transform: rotate(0deg);}
-    to {transfrom: rotate(360deg);}
+.spinner_container1{
+  position:relative;
+  z-index: 1;
 }
-#loading .spinner{
+/* 
+@keyframes spin{
+  to{ transform: rotate(0deg);}
+  from{ transform: rotate(360deg)}
+} */
+.spinner{
+  position: absolute;
+  /* z-index: 100; */
   content: '';
   box-sizing: border-box;
-  position: absolute;
+
   top: 50%;
   left: 50%;
-  width: 64px;
-  height: 64px;
-  margin-top: -32px;
-  margin-left: -32px;
+  width: 550px;
+  height: 550px;
+  margin-top: -150px;
+  margin-left: -275px;
   border-radius: 50%;
-  border: 4px solid lightgrey;
-  border-top-color: blue;
-  animation: spinner .8s linear infinite;
+  /* border-color: black;
+  border-top-color: aliceblue; */
+  /* animation: spin 0.8s ease-in infinte; */
 }
+.spinner_fill{
+  position: absolute;
+  /* z-index: 1; */
+  content: '';
+  box-sizing: border-box;
+ 
+  top: 50%;
+  left: 50%;
+  width: 550px;
+  height: 550px;
+  margin-top: -150px;
+  margin-left: -275px;
+  border-radius: 50%;
+  /* animation: spin 0s ease-in 1s; */
+  }
+
 /* .lds-facebook {
   display: inline-block;
   position: absolute;
