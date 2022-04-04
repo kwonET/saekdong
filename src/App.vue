@@ -22,6 +22,6 @@ export default {
 <style>
 *{
     font-family: 'Gothic A1', 'Source Han Sans', 'Noto Sans KR', 'Helvetica Neue', 'Arial', sans-serif;
-    
+    word-break: keep-all;
 }
 </style>
