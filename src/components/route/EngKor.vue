@@ -8,7 +8,7 @@
             <h3 class="eng-txt">Choose your language.</h3>
           </div>
           <div class="btn-container">
-            <button class="Btn" @click="KorClk()" :class="{select:korClicked}">
+            <button class="Btn" @click="KorClk()" :class="{select:KorClicked}">
                 <span>
                 한국어
                 </span>
