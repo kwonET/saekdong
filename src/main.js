@@ -16,7 +16,6 @@ import Letter from './components/route/Letter.vue'
 import Letter2 from './components/route/Letter2.vue'
 import Play from './components/route/Play.vue'
 import Play2 from './components/route/Play2.vue'
-import Weather from './components/route/test/Weather.vue'
 import Charm from './components/route/Charm.vue'
 
 import store from './store'
@@ -37,7 +36,6 @@ const routes = [ // 라우트 설정
       //   .catch(err => console.log(err));
       // }
     },
-    { path: '/weather', component: Weather },
     { path: '/charm', component: Charm },
 ]
 const router = new VueRouter({

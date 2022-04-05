@@ -37,16 +37,16 @@ export default {
             this.LoadingStatus=false;
         }
     },
-    computed:{
-        language(){
-            return this.$store.state.language;
-        },
-    },
     mounted() {
         setTimeout(() => {
             // You can also use replace() instead of push()
             this.$router.replace('/charm');
         }, 2000);
+    },
+    computed:{
+        language(){
+            return this.$store.state.language;
+        },
     },
     // created(){
     //     bus.$on('start:spinner', this.startSpinner);

@@ -13,7 +13,7 @@ export default {
         addInput(){
             if(this.newInputItem!==''){
             this.$emit('addInputItem',this.newInputItem) //addTodoItem이라는 이벤트가 하위컴포넌트에서 발생
-            // this.clearInput();
+            this.clearInput();
             }
         },
         clearInput(){

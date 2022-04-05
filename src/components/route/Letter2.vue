@@ -87,8 +87,10 @@ body{
     margin-top:0;
 }
 .img-container>img{
-    width:70%;
-    height:60%;
+    // width:70%;
+    // height:60%;
+    max-width: 50.3248vw;
+    height: 18.7322vh;
 }
 .text-container> span{
   font-style: normal;

@@ -6,12 +6,45 @@ Vue.use(Vuex);
 
 //export default new Vuex.Store(
 export default new Vuex.Store({
-    FETCH_LIST(){
-
-    },
     state:{
+        //ver:'guest',
+        ver:'staff',
         language: 'ko',
         currentIndex:0,
+        color:[
+            { 
+                feature:'아침',
+                rgb:(253,209,112)
+            },
+            { 
+                feature:'낮',
+                rgb:(104,203,110)
+            },
+            { 
+                feature:'저녁',
+                rgb:(254,153,197)
+            },
+            { 
+                feature:'맑음',
+                rgb:(10,163,233)
+            },
+            { 
+                feature:'구름',
+                rgb:(253,152,132)
+            },
+            { 
+                feature:'흐림',
+                rgb:(255,51,122),
+            },
+            { 
+                feature:'비',
+                rgb:(212,46,218)
+            },
+            { 
+                feature:'눈',
+                rgb:(207,222,229)
+            },
+        ],
         cards:[
             {
                 description:
@@ -53,6 +86,12 @@ export default new Vuex.Store({
         },
         cards: state=>{
             return state.cards;
+        },
+        // nowFeature:state=>{
+        //     return state.color;
+        // },
+        nowColor: state=>{
+            return state.color;
         }
     },
     mutations:{

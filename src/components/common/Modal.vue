@@ -94,5 +94,3 @@
   transform: scale(1.1);
 }
 </style>
-© 2022 GitHub, Inc.
-Terms

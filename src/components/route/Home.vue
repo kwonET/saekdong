@@ -37,15 +37,24 @@
 
 <script scoped>
   import Modal from '../common/Modal.vue'
+  import Weather from '../common/Weather.vue'
 
   export default{
     name:'Home',
     data(){
       return{
-        // showModal:false // 실제 코드
-        showModal:true // 테스트용
+        showModal : false, 
+        startcolor : props.Weather.time_color,
+        endcolor : props.Weather.weather_color,
       }
     },
+    // setup() {
+    //     const style = { 
+    //         '--start-color' : this.time_color,
+    //         '--end-color' : this.weather_color,
+    //     }
+    //     return { style }
+    // },
     // 모바일접속여부를 확인하는 메소드
     methods:{
       isMobile() {
@@ -57,28 +66,18 @@
       }
     },
     //2초 후 자동 라우팅
-    mounted() {
-      this.isMobile()
-      if(!this.showModal){
-        setTimeout(() => {
-            // You can also use replace() instead of push()
-            this.$router.push('/lang');
-        }, 2000);
-      }
-    },
-    // created() {
-    // // Use in js
-    // console.log(this.$isMobile());
+    // mounted() {
+    //   this.isMobile()
+    //   if(!this.showModal){
+    //     setTimeout(() => {
+    //         // You can also use replace() instead of push()
+    //         this.$router.push('/lang');
+    //     }, 2000);
+    //   }
     // },
-    // // async mounted() { 
-    // //   this.showModal=true;
-    // //   if(this.$isMobile()){
-    // //     this.showModal=false;
-    // //     console.log(this.$isMobile());
-    // //   }
-    // // },
     components:{
-      Modal
+      Modal,
+      Weather
     }
   }
 
@@ -95,7 +94,7 @@ body{
   left:0;
   width:100vw;
   height:100vh;
-  background: linear-gradient(#FDD170,#0AA3E9);
+  background: linear-gradient(rgb(v-bind('startcolor')),rgb(v-bind('endcolor')));
 }
  
 .imgtxt{

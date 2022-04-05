@@ -9,32 +9,46 @@
         <div class="charm-content">
             <div class="mini-container">
                 <div class="mini-rect"></div>
-                <div class="mini-shape">
-                </div>
-                <div class="mini-wish">make money</div>
+                <div class="mini-shape"></div>
+                <div class="mini-wish" > {{ userObj }}</div>
             </div>
             <div class="charm-text">
                 <span v-if="this.language=='ko'">당신의 염원은<br> 곧 이루어질 것입니다.<br> 색동 요술나라는<br> 당신의 앞날을 축복합니다</span>
-                <span v-if="this.language=='en'">Your wish will<br> come true soon.<br> You have the blessing<br> of Saekdong Magic Land for your future.</span>
+                <span v-if="this.language=='en'">Your wish will come<br> true soon. You have<br> the blessing of Saekdong<br> Magic Land for your future.</span>
             </div>
         </div>
     </div>
+        <!-- 다음버튼 -->
+      <NextBtn v-on:toNext="toNextPage"></NextBtn>
 </div>
 </template>
 
 <script>
+import NextBtn from '../common/NextBtn.vue'
+
 export default {
+    data(){
+        return{
+            userObj:{},
+            userWish:'',
+        };
+    },
+    methods:{
+        toNextPage(){
+            this.$router.replace('/weather');
+        }
+    },
     computed:{
         language(){
             return this.$store.state.language;
         },
-    },   
-     mounted() {
-        setTimeout(() => {
-            // You can also use replace() instead of push()
-            this.$router.replace('/weather');
-        }, 2000);
     },
+    created(){
+        this.userObj=localStorage.getItem(localStorage.length-1);
+    },
+    components:{
+        NextBtn
+    },  
 }
 </script>
 
@@ -49,14 +63,13 @@ body{
     width:100%;
     height:100%;
     background-color: #19A5E2;
-
+}
+.text-container{
     display:flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
-}
-.text-container{
     height:60%;
     margin-top:-30%;
 }
@@ -72,8 +85,6 @@ h3{
 
     color: #FFFFFF;
 }
-
-
 img{
     position: absolute;
     top:25%;
@@ -109,9 +120,9 @@ img{
     z-index: 100;
     width: 200px;
     height: 200px;
-    top:10%;
+    top:8%;
 
-    background: rgb(0, 255, 191);
+    background: linear-gradient(rgb(115, 255, 0),rgb(255, 0, 0));
     border-radius: 50%;
 }
 .mini-wish{
@@ -127,7 +138,7 @@ img{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    top:40%;
+    top:39%;
     left:20%;
     width:60%;
     height:50%;
@@ -137,7 +148,7 @@ span{
 
     font-style: medium;
     font-weight: 500;
-    font-size: 2.9vw;
+    font-size: 3.1vw;
     line-height: 2rem;
     text-align: center;
     letter-spacing: -1.5px;

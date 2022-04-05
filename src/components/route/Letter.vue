@@ -17,7 +17,7 @@
           </div>
         </div>
       </div>
-
+      <!-- <RemoveBtn v-if="this.version=='staff'" v-on:clearAll="ClearAllItems"></RemoveBtn> -->
       <NextBtn v-on:toNext="toNextPage"></NextBtn>
     </div>
   </div>
@@ -26,29 +26,42 @@
 <script>
 import NextBtn from '../common/NextBtn.vue'
 import Input from '../common/Input.vue'
+import RemoveBtn from "../common/RemoveBtn.vue"
+import Modal from '../common/Modal.vue'
+import Charm from '../route/Charm.vue'
 
 export default {
   data(){
     return{
+      newItem:'',
       inputItems:[],
+      num:0,
     }
   },
   computed:{
     language(){
       return this.$store.state.language;
     },
+    version(){
+      return this.$store.state.ver;
+    },
   },
   methods:{
     addOneItem(inputItem){
-      const obj={completed:false,item:inputItem};
-      localStorage.setItem(inputItem,JSON.stringify(obj));
+      var userNum=this.num;
+      const obj={user_num:userNum,item:inputItem};
+      localStorage.setItem(userNum,JSON.stringify(obj));
       this.inputItems.push(obj);
+      this.num++;
+    },
+    clearInput(){
+      this.newItem=''; // 데이터를 리셋
     },
     toNextPage(){
       this.$router.replace('/letter2');
     },
-  },
-  created(){
+  },  
+   created(){
     if(localStorage.length>0){
       for(let i=0;i<localStorage.length;i++){
         if(localStorage.key(i)!=='loglevel:webpack-dev-server'){
