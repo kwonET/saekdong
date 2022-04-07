@@ -1,48 +1,58 @@
 import Vue from "vue";
 // import { VueCarousel } from "vue-carousel";
 import Vuex from "vuex";
-
+import axios from 'axios';
+Vue.prototype.$http = axios;
+import { posix } from 'path';
+// axios.defaults.timeout=6000;
 Vue.use(Vuex);
 
 //export default new Vuex.Store(
 export default new Vuex.Store({
     state:{
         //ver:'guest',
+        //openweather api
+        now:"지금은..",
+        weather_des:"날씨",
+        time_color:[],
+        weather_color:[],
+        palette:[],
+        //others
         ver:'staff',
         language: 'ko',
         currentIndex:0,
         color:[
             { 
                 feature:'아침',
-                rgb:(253,209,112)
+                rgb:[253,209,112]
             },
             { 
                 feature:'낮',
-                rgb:(104,203,110)
+                rgb:[104,203,110]
             },
             { 
                 feature:'저녁',
-                rgb:(254,153,197)
+                rgb:[254,153,197]
             },
             { 
                 feature:'맑음',
-                rgb:(10,163,233)
+                rgb:[10,163,233]
             },
             { 
                 feature:'구름',
-                rgb:(253,152,132)
+                rgb:[253,152,132]
             },
             { 
                 feature:'흐림',
-                rgb:(255,51,122),
+                rgb:[255,51,122],
             },
             { 
                 feature:'비',
-                rgb:(212,46,218)
+                rgb:[212,46,218]
             },
             { 
                 feature:'눈',
-                rgb:(207,222,229)
+                rgb:[207,222,229]
             },
         ],
         cards:[
@@ -92,7 +102,13 @@ export default new Vuex.Store({
         // },
         nowColor: state=>{
             return state.color;
-        }
+        },
+        timeColor: state=>{
+            return state.time_color;
+        },
+        weatherColor: state=>{
+            return state.weather_color;
+        },
     },
     mutations:{
         // Language 설정 관련
@@ -118,6 +134,103 @@ export default new Vuex.Store({
         },
         nextCard:state=>{
             state.currentIndex++;
+        },
+        // color 
+        generateNow:(state,payload)=>{
+            if(payload>=6 && payload<12){state.now='아침'}
+            else if(payload>=12 && payload<18){state.now='낮'}
+            else if(payload>=18 && payload<24){state.now='밤'}
+            else if(payload>=0 && payload<6){state.now='새벽'}
+        },
+        generateWeatherDes:(state,payload)=>{
+            if (payload==800){state.weather_des='맑음'}
+            else if (payload==801 || payload==802 || payload==803|| payload==804) {state.weather_des='구름'}
+            else if ((payload>=200 && payload<250)||(payload>=300 && payload<350) || (payload>700 && payload<790)){state.weather_des='흐림'}
+            else if (payload>=500 && payload<600 ) {state.weather_des='비'}
+            else if (payload>=600 && payload<650 ) {state.weather_des='눈'}
+        },
+        pickTimeColor:(state)=>{
+            //time
+            if(state.now=='아침'){
+                state.time_color=state.color[0].rgb;
+            }
+            else if(state.now=='낮'){
+                state.time_color=state.color[1].rgb;
+            }
+            else if(state.now=='저녁'){
+                state.time_color=state.color[2].rgb;
+            }
+            else if(state.now=='새벽'){
+                state.time_color=state.color[0].rgb;
+            }
+        },
+        pickWeatherColor:(state)=>{
+            //weather
+            if(state.weather_des=='맑음'){
+                state.weather_color=state.color[3].rgb;
+            }
+            else if(state.weather_des=='구름'){
+                state.weather_color=state.color[4].rgb;
+            }
+            else if(state.weather_des=='흐림'){
+                state.weather_color=state.color[5].rgb;
+            }
+            else if(state.weather_des=='비'){
+                state.weather_color=state.color[6].rgb;
+            }
+            else if(state.weather_des=='눈'){
+                state.weather_color=state.color[7].rgb;
+            }
+        },
+        paletteColor:(state)=>{
+            //r
+            if(state.time_color[0]<state.weather_color[0]){
+                var differ =(state.weather_color[0]-state.time_color[0])/12;
+                for(var i=1;i<13;i++) state.palette[i-1][0]=state.time_color+differ*i;
+            }
+            else{
+                var differ =(state.time_color[0]-state.weather_color[0])/12;
+                for(var i=1;i<13;i++) state.palette[i-1][0]=state.weather_color+differ*i;
+            }
+            //g
+            if(state.time_color[1]<state.weather_color[1]){
+                var differ =(state.weather_color[1]-state.time_color[1])/12;
+                for(var i=1;i<13;i++) state.palette[i-1][1]=state.time_color+differ*i;
+            }
+            else{
+                var differ =(state.time_color[1]-state.weather_color[1])/12;
+                for(var i=1;i<13;i++) state.palette[i-1][1]=state.weather_color+differ*i;
+            }
+            //b
+            if(state.time_color[2]<state.weather_color[2]){
+                var differ =(state.weather_color[2]-state.time_color[2])/12;
+                for(var i=1;i<13;i++) state.palette[i-1][2]=state.time_color+differ*i;
+            }
+            else{
+                var differ =(state.time_color[2]-state.weather_color[2])/12;
+                for(var i=1;i<13;i++) state.palette[i-1][2]=state.weather_color+differ*i;
+            }
+        }
+    },
+    actions:{
+        callDate:({commit})=>{
+            //time
+            var date=new Date();
+            commit('generateNow', date.getHours());
+        },
+        callWeather:({commit})=>{
+            //const BASE_URL='https://api.openweathermap.org/data/2.5/weather?q=Incheon&appid=b33642b32e9e7870547c36109f42a437'
+            //this.$http.get(`${BASE_URL}`)
+            axios.get(`https://api.openweathermap.org/data/2.5/weather?q=Incheon&appid=b33642b32e9e7870547c36109f42a437`)
+                .then((result)=>{
+                    commit('generateWeatherDes',result.data.weather[0].id);
+                    //state.city= result.data.sys.country+","+result.data.name+"시";
+                    //state.weather=result.data.weather[0].id;
+                })
+                // .catch((result)=>{
+                //     commit('failWeatherDes',result);
+                // })
+
         },
     }
 })

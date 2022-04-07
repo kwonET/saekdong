@@ -37,24 +37,20 @@
 
 <script scoped>
   import Modal from '../common/Modal.vue'
-  import Weather from '../common/Weather.vue'
 
   export default{
     name:'Home',
     data(){
       return{
         showModal : false, 
-        startcolor : props.Weather.time_color,
-        endcolor : props.Weather.weather_color,
+        s_r:0,
+        s_g:0,
+        s_b:0,
+        e_r:0,
+        e_g:0,
+        e_b:0,
       }
     },
-    // setup() {
-    //     const style = { 
-    //         '--start-color' : this.time_color,
-    //         '--end-color' : this.weather_color,
-    //     }
-    //     return { style }
-    // },
     // 모바일접속여부를 확인하는 메소드
     methods:{
       isMobile() {
@@ -63,21 +59,36 @@
         } else {
           this.showModal=true;
         }
-      }
+      },
+    },
+    computed:{
+        timeColor(){
+            return this.$store.state.time_color;
+        },
+        weatherColor(){
+            return this.$store.state.weather_color;
+        }, //weatherColor
+    },
+    mounted() {
+      this.$store.commit('pickTimeColor');
+      this.$store.commit('pickWeatherColor');
+    },
+    created(){
+      this.$store.dispatch('callWeather');
+      this.$store.dispatch('callDate');
     },
     //2초 후 자동 라우팅
-    // mounted() {
-    //   this.isMobile()
-    //   if(!this.showModal){
-    //     setTimeout(() => {
-    //         // You can also use replace() instead of push()
-    //         this.$router.push('/lang');
-    //     }, 2000);
-    //   }
-    // },
+    mounted() {
+      this.isMobile()
+      if(!this.showModal){
+        setTimeout(() => {
+            // You can also use replace() instead of push()
+            this.$router.push('/lang');
+        }, 2000);
+      }
+    },
     components:{
       Modal,
-      Weather
     }
   }
 
@@ -94,7 +105,7 @@ body{
   left:0;
   width:100vw;
   height:100vh;
-  background: linear-gradient(rgb(v-bind('startcolor')),rgb(v-bind('endcolor')));
+  background: linear-gradient(rgb(v-bind(s_r),v-bind(s_g),v-bind(s_b)),rgb(v-bind(e_r),v-bind(e_g),v-bind(e_b)));
 }
  
 .imgtxt{

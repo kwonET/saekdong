@@ -50,7 +50,7 @@ export default {
     addOneItem(inputItem){
       var userNum=this.num;
       const obj={user_num:userNum,item:inputItem};
-      localStorage.setItem(userNum,JSON.stringify(obj));
+      localStorage.setItem(inputItem,JSON.stringify(obj));
       this.inputItems.push(obj);
       this.num++;
     },
@@ -58,8 +58,8 @@ export default {
       this.newItem=''; // 데이터를 리셋
     },
     toNextPage(){
-      this.$router.replace('/letter2');
-    },
+        this.$router.replace('/letter2');
+    }
   },  
    created(){
     if(localStorage.length>0){

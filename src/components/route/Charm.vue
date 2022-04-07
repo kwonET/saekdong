@@ -10,7 +10,7 @@
             <div class="mini-container">
                 <div class="mini-rect"></div>
                 <div class="mini-shape"></div>
-                <div class="mini-wish" > {{ userObj }}</div>
+                <div class="mini-wish" > {{ userWish }}</div>
             </div>
             <div class="charm-text">
                 <span v-if="this.language=='ko'">당신의 염원은<br> 곧 이루어질 것입니다.<br> 색동 요술나라는<br> 당신의 앞날을 축복합니다</span>
@@ -19,7 +19,7 @@
         </div>
     </div>
         <!-- 다음버튼 -->
-      <NextBtn v-on:toNext="toNextPage"></NextBtn>
+     <NextBtn v-bind:propsdata="BtnTxt" v-on:toNext="toNextPage"></NextBtn>
 </div>
 </template>
 
@@ -29,13 +29,14 @@ import NextBtn from '../common/NextBtn.vue'
 export default {
     data(){
         return{
+            BtnTxt:'탑 보러 가기',
             userObj:{},
             userWish:'',
         };
     },
     methods:{
         toNextPage(){
-            this.$router.replace('/weather');
+            this.$router.replace('/tower');
         }
     },
     computed:{
@@ -44,7 +45,11 @@ export default {
         },
     },
     created(){
-        this.userObj=localStorage.getItem(localStorage.length-1);
+        if(localStorage.key(0)!=='loglevel:webpack-dev-server'){
+            this.userWish=localStorage.key(0);
+        } else{
+            this.userWish=localStorage.key(1);
+        }
     },
     components:{
         NextBtn
@@ -130,6 +135,16 @@ img{
     z-index: 100;
     top: 35%;
     font-size:30px;
+
+
+    font-style: medium;
+    font-weight: 500;
+    font-size: 3.5vw;
+    line-height: 2rem;
+    text-align: center;
+    letter-spacing: -1.5px;
+
+    color: #000000;
 }
 .charm-text{
     position: absolute;

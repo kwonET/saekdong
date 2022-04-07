@@ -27,11 +27,11 @@ export default {
             weather_des:"날씨",
         }
     },
-    props:{
+    props:
+    {
         time_color:(0,0,0),
         weather_color:(0,0,0),
     },
-
     computed:{
       hasResult() {
         return this.posts.length > 0

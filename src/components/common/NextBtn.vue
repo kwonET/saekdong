@@ -3,7 +3,7 @@
 <div class="containter">
   <div class="nextBtnContainer" v-on:click="NextPage">
       <span class="NextBtn">
-        다음
+        {{ propsdata }}
       </span>
   </div>
 </div>
@@ -12,6 +12,12 @@
 
 <script>
 export default {
+  props:  {
+    propsdata: {
+      default: '다음',
+      type: String
+    }
+  },
   methods:{
     NextPage(){
       this.$emit('toNext');
