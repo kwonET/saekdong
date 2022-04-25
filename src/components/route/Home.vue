@@ -1,7 +1,7 @@
 <!--1. 랜딩페이지-->
 
 <template>
-  <div id="home">
+  <div id="home" style="userStyle">
     <Modal v-if="showModal" @close="showModal=false">
     <!-- <Modal v-if="$isMobile()"> -->
       <!--
@@ -43,12 +43,6 @@
     data(){
       return{
         showModal : false, 
-        s_r:0,
-        s_g:0,
-        s_b:0,
-        e_r:0,
-        e_g:0,
-        e_b:0,
       }
     },
     // 모바일접속여부를 확인하는 메소드
@@ -68,14 +62,24 @@
         weatherColor(){
             return this.$store.state.weather_color;
         }, //weatherColor
-    },
-    mounted() {
-      this.$store.commit('pickTimeColor');
-      this.$store.commit('pickWeatherColor');
+        userStyle(){
+          return{
+            '--s':this.timeColor,
+            '--e':this.weatherColor,
+            '--s-r':this.timeColor[0],
+            '--s-g':this.timeColor[1],
+            '--s-b':this.timeColor[2],
+            '--e-r':this.weatherColor[0],
+            '--e-g':this.weatherColor[1],
+            '--e-b':this.weatherColor[2],
+          }
+        }
     },
     created(){
       this.$store.dispatch('callWeather');
       this.$store.dispatch('callDate');
+      // this.$store.commit('pickTimeColor');
+      // this.$store.commit('pickWeatherColor');
     },
     //2초 후 자동 라우팅
     mounted() {
@@ -105,7 +109,9 @@ body{
   left:0;
   width:100vw;
   height:100vh;
-  background: linear-gradient(rgb(v-bind(s_r),v-bind(s_g),v-bind(s_b)),rgb(v-bind(e_r),v-bind(e_g),v-bind(e_b)));
+  background:linear-gradient(RGB(--s),RGB(--e));
+  /* background: linear-gradient(rgb(var(--s-r),var(--s-g),var(--s-b)),rgb(var(--e-r),var(--e-g),var(--e-b))); */
+  /* background: linear-gradient(rgb(v-bind(s_r),v-bind(s_g),v-bind(s_b)),rgb(v-bind(e_r),v-bind(e_g),v-bind(e_b))); */
 }
  
 .imgtxt{

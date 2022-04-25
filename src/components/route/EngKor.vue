@@ -1,6 +1,6 @@
 <!--2. 한영 선택 페이지-->
 <template>
-  <div id="lang">
+  <div id="lang" style="userStyle" background-color="rgb(var(--r),var(--g),var(--b))">
       <div class="container">
         <div class="choose-container">
           <div class="txt-container">
@@ -36,12 +36,55 @@ export default {
   name:'About',
   data(){
     return {
-      EngClicked:false, KorClicked:false
+      EngClicked:false, KorClicked:false,
+      palette:[],
     }
   },
   computed:{
     language(){
       return this.$store.state.language;
+    },
+    timeColor(){
+        return this.$store.state.time_color;
+    },
+    weatherColor(){
+        return this.$store.state.weather_color;
+    }, //weatherColor
+    paletteColor(){
+            //r
+            if(this.timeColor[0]<this.weatherColor[0]){
+                var differ =(this.weatherColor[0]-this.timeColor[0])/12;
+                this.palette[0]=this.timeColor+differ*1;
+            }
+            else{
+                var differ =(this.timeColor[0]-this.weatherColor[0])/12;
+                this.palette[0]=this.weatherColor+differ*1;
+            }
+            //g
+            if(this.timeColor[1]<this.weatherColor[1]){
+                var differ =(this.weatherColor[1]-this.timeColor[1])/12;
+                this.palette[1]=this.timeColor+differ*1;
+            }
+            else{
+                var differ =(this.timeColor[1]-this.weatherColor[1])/12;
+                this.palette[1]=this.weatherColor+differ*1;
+            }
+            //b
+            if(this.timeColor[2]<this.weatherColor[2]){
+                var differ =(this.weatherColor[2]-this.timeColor[2])/12;
+                this.palette[2]=this.timeColor+differ*1;
+            }
+            else{
+                var differ =(this.timeColor[2]-this.weatherColor[2])/12;
+                this.palette[2]=this.weatherColor+differ*1;
+            }
+    },
+    userStyle(){
+      return{
+        '--r':this.palette[0],
+        '--g':this.palette[1],
+        '--b':this.palette[2],
+      }
     }
   },
   methods:{
@@ -59,8 +102,13 @@ export default {
       this.$store.commit('updateLanguage','en')
     },
     toNextPage(){
-        this.$router.replace('/intro');
-    }
+      this.$router.replace('/intro');
+    },
+  },
+  created(){
+    this.$store.dispatch('callWeather');
+    this.$store.dispatch('callDate');
+    this.paletteColor();
   },
   components:{
     NextBtn
@@ -78,7 +126,6 @@ body{
   left:0;
   width:100vw;
   height:100vh;
-  background-color: #FDD170;
 }
 .container{
   height:100%;

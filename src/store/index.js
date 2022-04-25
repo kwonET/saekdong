@@ -16,7 +16,7 @@ export default new Vuex.Store({
         weather_des:"날씨",
         time_color:[],
         weather_color:[],
-        palette:[],
+        palette:[[]],
         //others
         ver:'staff',
         language: 'ko',
@@ -109,6 +109,9 @@ export default new Vuex.Store({
         weatherColor: state=>{
             return state.weather_color;
         },
+        paletterColor: state=>{
+            return state.palette;
+        }
     },
     mutations:{
         // Language 설정 관련
@@ -137,78 +140,45 @@ export default new Vuex.Store({
         },
         // color 
         generateNow:(state,payload)=>{
-            if(payload>=6 && payload<12){state.now='아침'}
-            else if(payload>=12 && payload<18){state.now='낮'}
-            else if(payload>=18 && payload<24){state.now='밤'}
-            else if(payload>=0 && payload<6){state.now='새벽'}
+            if(payload>=6 && payload<12){state.now='아침'; state.time_color=state.color[0].rgb;}
+            else if(payload>=12 && payload<18){state.now='낮'; state.time_color=state.color[1].rgb;}
+            else if(payload>=18 && payload<24){state.now='저녁'; state.time_color=state.color[2].rgb;}
+            else if(payload>=0 && payload<6){state.now='새벽'; state.time_color=state.color[0].rgb;}
         },
         generateWeatherDes:(state,payload)=>{
-            if (payload==800){state.weather_des='맑음'}
-            else if (payload==801 || payload==802 || payload==803|| payload==804) {state.weather_des='구름'}
-            else if ((payload>=200 && payload<250)||(payload>=300 && payload<350) || (payload>700 && payload<790)){state.weather_des='흐림'}
-            else if (payload>=500 && payload<600 ) {state.weather_des='비'}
-            else if (payload>=600 && payload<650 ) {state.weather_des='눈'}
-        },
-        pickTimeColor:(state)=>{
-            //time
-            if(state.now=='아침'){
-                state.time_color=state.color[0].rgb;
-            }
-            else if(state.now=='낮'){
-                state.time_color=state.color[1].rgb;
-            }
-            else if(state.now=='저녁'){
-                state.time_color=state.color[2].rgb;
-            }
-            else if(state.now=='새벽'){
-                state.time_color=state.color[0].rgb;
-            }
-        },
-        pickWeatherColor:(state)=>{
-            //weather
-            if(state.weather_des=='맑음'){
-                state.weather_color=state.color[3].rgb;
-            }
-            else if(state.weather_des=='구름'){
-                state.weather_color=state.color[4].rgb;
-            }
-            else if(state.weather_des=='흐림'){
-                state.weather_color=state.color[5].rgb;
-            }
-            else if(state.weather_des=='비'){
-                state.weather_color=state.color[6].rgb;
-            }
-            else if(state.weather_des=='눈'){
-                state.weather_color=state.color[7].rgb;
-            }
+            if (payload==800){state.weather_des='맑음'; state.weather_color=state.color[3].rgb; }
+            else if (payload==801 || payload==802 || payload==803|| payload==804) {state.weather_des='구름'; state.weather_color=state.color[4].rgb; }
+            else if ((payload>=200 && payload<250)||(payload>=300 && payload<350) || (payload>700 && payload<790)){state.weather_des='흐림'; state.weather_color=state.color[5].rgb; }
+            else if (payload>=500 && payload<600 ) {state.weather_des='비'; state.weather_color=state.color[6].rgb;}
+            else if (payload>=600 && payload<650 ) {state.weather_des='눈'; state.weather_color=state.color[7].rgb; }
         },
         paletteColor:(state)=>{
             //r
             if(state.time_color[0]<state.weather_color[0]){
                 var differ =(state.weather_color[0]-state.time_color[0])/12;
-                for(var i=1;i<13;i++) state.palette[i-1][0]=state.time_color+differ*i;
+                for(var i=1;i<12;i++) state.palette[i-1][0]=state.time_color+differ*i;
             }
             else{
                 var differ =(state.time_color[0]-state.weather_color[0])/12;
-                for(var i=1;i<13;i++) state.palette[i-1][0]=state.weather_color+differ*i;
+                for(var i=1;i<12;i++) state.palette[i-1][0]=state.weather_color+differ*i;
             }
             //g
             if(state.time_color[1]<state.weather_color[1]){
                 var differ =(state.weather_color[1]-state.time_color[1])/12;
-                for(var i=1;i<13;i++) state.palette[i-1][1]=state.time_color+differ*i;
+                for(var i=1;i<12;i++) state.palette[i-1][1]=state.time_color+differ*i;
             }
             else{
                 var differ =(state.time_color[1]-state.weather_color[1])/12;
-                for(var i=1;i<13;i++) state.palette[i-1][1]=state.weather_color+differ*i;
+                for(var i=1;i<12;i++) state.palette[i-1][1]=state.weather_color+differ*i;
             }
             //b
             if(state.time_color[2]<state.weather_color[2]){
                 var differ =(state.weather_color[2]-state.time_color[2])/12;
-                for(var i=1;i<13;i++) state.palette[i-1][2]=state.time_color+differ*i;
+                for(var i=1;i<12;i++) state.palette[i-1][2]=state.time_color+differ*i;
             }
             else{
                 var differ =(state.time_color[2]-state.weather_color[2])/12;
-                for(var i=1;i<13;i++) state.palette[i-1][2]=state.weather_color+differ*i;
+                for(var i=1;i<12;i++) state.palette[i-1][2]=state.weather_color+differ*i;
             }
         }
     },

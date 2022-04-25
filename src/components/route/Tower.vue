@@ -5,12 +5,11 @@
        <h3 v-if="this.language=='ko'">당신은 {{ order }}번째 소원탑을 쌓았습니다.</h3>
         <h3 v-if="this.language=='en'">You have built the {{ order }} wish tower.</h3>
       </div>
-    <div class="btn-container">
+    <div class="btn-container" @clicked="toNextpage">
             <span v-if="this.language=='ko'">내 요술봉 링크 바로가기</span>
             <span v-if="this.language=='en'">See my magic wand</span>
     </div>
     <div class="wish-top">
-        
     </div>
    </div>
 </template>
@@ -25,6 +24,11 @@ export default {
     computed:{
         language(){
         return this.$store.state.language;
+        },
+    },
+    method:{
+        toNextPage(){
+            this.$router.replace('/stick');
         },
     }
 }
