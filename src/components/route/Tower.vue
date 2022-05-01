@@ -1,36 +1,66 @@
 <template>
-  <div id="tower">
+  <div id="tower" :style="userStyle" style>
       <div class="text-container">
-      <img src="../../assets/carousel_last.png" alt="">
+      <img class="carousel" src="../../assets/carousel_last.png" alt="">
        <h3 v-if="this.language=='ko'">당신은 {{ order }}번째 소원탑을 쌓았습니다.</h3>
         <h3 v-if="this.language=='en'">You have built the {{ order }} wish tower.</h3>
       </div>
-    <div class="btn-container" @clicked="toNextpage">
-            <span v-if="this.language=='ko'">내 요술봉 링크 바로가기</span>
-            <span v-if="this.language=='en'">See my magic wand</span>
-    </div>
+      <StickBtn v-if="this.language=='ko'" v-bind:propsdata="BtnKorTxt" v-on:toNext="toNextPage"></StickBtn>
+      <StickBtn v-if="this.language=='en'" v-bind:propsdata="BtnEngTxt" v-on:toNext="toNextPage"></StickBtn>
+     
     <div class="wish-top">
+        <img class="element" src="../../assets/pngfiles/Spr_C-6.png" alt="">
+        <img class="element" src="../../assets/pngfiles/Spr_A-5.png" alt="">
+        <img class="element" src="../../assets/pngfiles/Spr_C-5.png" alt="">
+        <img class="stick" src="../../assets/pngfiles/Spr_Stick.png" alt="">
     </div>
-   </div>
+  </div>
 </template>
 
 <script>
+import StickBtn from '../common/StickBtn.vue'
 export default {
     data(){
         return{
             order:0,
+            BtnKorTxt:'내 요술봉 링크 바로가기',
+            BtnEngTxt:'See my magic wand',
         }
     },
     computed:{
         language(){
-        return this.$store.state.language;
+            return this.$store.state.language;
         },
+        timeColor(){
+            return this.$store.state.time_color;
+        },
+        weatherColor(){
+            return this.$store.state.weather_color;
+        }, 
+        paletteColor(){
+            return this.$store.state.palette;
+        },
+        userStyle(){
+            return{
+                //home = 0번째
+                '--r':this.paletteColor[0][10],
+                '--g':this.paletteColor[1][10],
+                '--b':this.paletteColor[2][10],
+            }
+        }
     },
     method:{
         toNextPage(){
             this.$router.replace('/stick');
         },
-    }
+    },
+    created(){
+        this.$store.dispatch('callWeather');
+        this.$store.dispatch('callDate');
+    },
+    components:{
+        StickBtn
+    },  
 }
 </script>
 
@@ -44,7 +74,7 @@ body{
     left:0;
     width:100%;
     height:100%;
-    background-color: #19A5E2;
+    background-color: rgb(var(--r),var(--g),var(--b));
 }
 .text-container{
     display:flex;
@@ -52,8 +82,9 @@ body{
     justify-content: center;
     align-items: center;
     text-align: center;
-    height:58%;
-    margin-top:-30%;
+    height:30%;
+    /* height:58%;
+    margin-top:-30%; */
 }
 h3{
     margin:0 auto;
@@ -75,7 +106,7 @@ h3{
     height:10%;
     z-index: 100;
 }
-img{
+.carousel{
     position: absolute;
     top:10%;
     left:10%;
@@ -84,29 +115,18 @@ img{
     height:10%;
     z-index: 0;
 }
-.btn-container{
-    position: absolute;
-    width: 45%;
-    height: 4%;
-    left: 30%;
-    top: 23%;
-
-    background: #C7D4ED;
-    border-radius: 40px;
+.wish-top{
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    width:100%;
+    height:70%;
 }
-span{
-    margin:0 auto;
-
-    font-style: medium;
-    font-weight:600;
-    font-size: 3.2vw;
-    line-height: 3.5rem;
-    text-align: center;
-    letter-spacing: -2px;
-
-    color: rgba(36, 57, 151, 1);
+.stick{
+    width:10%; 
+}
+.element{
+    width:28.1%;
 }
 </style>

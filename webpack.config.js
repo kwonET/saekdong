@@ -6,7 +6,11 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, './dist'),
     publicPath: '/dist/',
-    filename: 'build.js'
+    filename: 'build.js',
+  },
+  node: {
+    fs: 'empty',
+    net: 'empty',
   },
   module: {
     rules: [
@@ -20,7 +24,7 @@ module.exports = {
         test: /\.vue$/,
         loader: 'vue-loader',
         options: {
-          loaders: {
+          rules: {
           }
           // other vue-loader options go here
         }

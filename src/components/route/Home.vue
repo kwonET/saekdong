@@ -1,7 +1,7 @@
 <!--1. 랜딩페이지-->
 
 <template>
-  <div id="home" style="userStyle">
+  <div id="home" :style="userStyle" style>
     <Modal v-if="showModal" @close="showModal=false">
     <!-- <Modal v-if="$isMobile()"> -->
       <!--
@@ -66,12 +66,6 @@
           return{
             '--s':this.timeColor,
             '--e':this.weatherColor,
-            '--s-r':this.timeColor[0],
-            '--s-g':this.timeColor[1],
-            '--s-b':this.timeColor[2],
-            '--e-r':this.weatherColor[0],
-            '--e-g':this.weatherColor[1],
-            '--e-b':this.weatherColor[2],
           }
         }
     },
@@ -109,7 +103,7 @@ body{
   left:0;
   width:100vw;
   height:100vh;
-  background:linear-gradient(RGB(--s),RGB(--e));
+  background:linear-gradient(RGB(var(--s)),RGB(var(--e)));
   /* background: linear-gradient(rgb(var(--s-r),var(--s-g),var(--s-b)),rgb(var(--e-r),var(--e-g),var(--e-b))); */
   /* background: linear-gradient(rgb(v-bind(s_r),v-bind(s_g),v-bind(s_b)),rgb(v-bind(e_r),v-bind(e_g),v-bind(e_b))); */
 }

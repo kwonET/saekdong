@@ -1,10 +1,10 @@
 <template>
-  <div id="lett2">
-    <div class="all-container">
+  <div id="lett2" :style="userStyle" style>
+    <div class="all-container" >
         <div class="lett-container">
             <div class="text-container">
-                <span v-if="this.language=='ko'">염원을 이루기 위한<br> 첫번째 절차가 진행되었습니다.</span>
-                <span v-if="this.language=='en'">Initial step to make<br> your wish come true has been done.</span>
+              <span v-if="this.language=='ko'">염원을 이루기 위한 첫번째 절차가 진행되었습니다.</span>
+              <span v-if="this.language=='en'">Initial step to make<br> your wish come true has been done.</span>
             </div>
         
             <div class="img-container">
@@ -12,7 +12,8 @@
             </div>
         </div>
         <div class="btn-container">
-            <NextBtn v-on:toNext="toNextPage"></NextBtn>
+            <NextBtn v-if="this.language=='ko'" v-bind:propsdata="BtnKorTxt" v-on:toNext="toNextPage()"></NextBtn>
+            <NextBtn v-if="this.language=='en'" v-bind:propsdata="BtnEngTxt" v-on:toNext="toNextPage()"></NextBtn>
       </div>
     </div>
   </div>
@@ -22,10 +23,33 @@
 import NextBtn from "../common/NextBtn.vue"
 
 export default {
+  data(){
+    return{
+      BtnKorTxt:'다음',
+      BtnEngTxt:'Next',
+    }
+  },
     computed:{
         language(){
             return this.$store.state.language;
         },
+        timeColor(){
+        return this.$store.state.time_color;
+        },
+        weatherColor(){
+            return this.$store.state.weather_color;
+        }, 
+        paletteColor(){
+            return this.$store.state.palette;
+        },
+        userStyle(){
+          return{
+            //home = 0번째
+            '--r':this.paletteColor[0][6],
+            '--g':this.paletteColor[1][6],
+            '--b':this.paletteColor[2][6],
+          }
+        }
     },
     methods:{
         toNextPage(){
@@ -34,7 +58,11 @@ export default {
     },
     components:{
         NextBtn,
-    }
+    },
+    created(){
+      this.$store.dispatch('callWeather');
+      this.$store.dispatch('callDate');
+  },
 }
 </script>
 
@@ -51,7 +79,7 @@ body{
   left:0;
   width:100%;
   height:100%;
-  background-color: #FDD170;
+  background-color: rgb(var(--r),var(--g),var(--b));
 }
 .all-container{
   display: flex;
@@ -64,7 +92,7 @@ body{
   /* flex-basis: 524px; */
 }
 .lett-container{
-  padding-top:40%;
+  padding-top:55%;
   flex-grow: 8;
 
   display: flex;
@@ -80,6 +108,19 @@ body{
     margin-top:0;
     width:65%;
 }
+
+span{
+  font-style: normal;
+  font-weight: 500;
+  font-size: 5.6075vw;
+  line-height: 4rem;
+  /* identical to box height */
+
+  text-align: center;
+  letter-spacing: -1.5px;
+
+  color: #000000;
+}
 .img-container{
     padding-top:20%;
     width:100%;
@@ -91,17 +132,5 @@ body{
     // height:60%;
     max-width: 50.3248vw;
     height: 18.7322vh;
-}
-.text-container> span{
-  font-style: normal;
-  font-weight: 700;
-  font-size: 5.6075vw;
-  line-height: 4rem;
-  /* identical to box height */
-
-  text-align: center;
-  letter-spacing: -1.5px;
-
-  color: #000000;
 }
 </style>

@@ -1,9 +1,11 @@
 import Vue from "vue";
 // import { VueCarousel } from "vue-carousel";
 import Vuex from "vuex";
+import createPersistedState from 'vuex-persistedstate'
 import axios from 'axios';
 Vue.prototype.$http = axios;
 import { posix } from 'path';
+import { stat } from "fs";
 // axios.defaults.timeout=6000;
 Vue.use(Vuex);
 
@@ -16,7 +18,10 @@ export default new Vuex.Store({
         weather_des:"날씨",
         time_color:[],
         weather_color:[],
-        palette:[[]],
+        palette:[],
+        palette_r:[],
+        palette_g:[], 
+        palette_b:[],
         //others
         ver:'staff',
         language: 'ko',
@@ -40,7 +45,7 @@ export default new Vuex.Store({
             },
             { 
                 feature:'구름',
-                rgb:[253,152,132]
+                rgb:[252,152,132]
             },
             { 
                 feature:'흐림',
@@ -150,35 +155,60 @@ export default new Vuex.Store({
             else if (payload==801 || payload==802 || payload==803|| payload==804) {state.weather_des='구름'; state.weather_color=state.color[4].rgb; }
             else if ((payload>=200 && payload<250)||(payload>=300 && payload<350) || (payload>700 && payload<790)){state.weather_des='흐림'; state.weather_color=state.color[5].rgb; }
             else if (payload>=500 && payload<600 ) {state.weather_des='비'; state.weather_color=state.color[6].rgb;}
-            else if (payload>=600 && payload<650 ) {state.weather_des='눈'; state.weather_color=state.color[7].rgb; }
+            else if (payload>=600 && payload<650 ) {state.weather_des='눈'; state.weather_color=state.color[7].rgb;}
         },
         paletteColor:(state)=>{
             //r
+            state.palette.splice(0);
+            state.palette_r.splice(0);
+            state.palette_g.splice(0);
+            state.palette_b.splice(0);
             if(state.time_color[0]<state.weather_color[0]){
-                var differ =(state.weather_color[0]-state.time_color[0])/12;
-                for(var i=1;i<12;i++) state.palette[i-1][0]=state.time_color+differ*i;
+                var differ =(state.weather_color[0]-state.time_color[0])/11;
+                for(var i=0;i<12;i++) {
+                    state.palette_r.push(state.time_color[0] + differ*i );
+                }
+                state.palette.push(state.palette_r);
+                //for(var i=1;i<12;i++) {state.palette[i-1].push(state.time_color+differ*i);}
             }
-            else{
-                var differ =(state.time_color[0]-state.weather_color[0])/12;
-                for(var i=1;i<12;i++) state.palette[i-1][0]=state.weather_color+differ*i;
+            if (state.time_color[0]>state.weather_color[0]){
+                var differ =(state.time_color[0]-state.weather_color[0])/11;
+                for(var i=0;i<12;i++) {
+                    state.palette_r.push(state.time_color[0] - differ*i);
+                }
+                state.palette.push(state.palette_r);
+                //for(var i=1;i<12;i++) {state.palette[i-1].push(state.weather_color+differ*i);}
             }
+        
             //g
             if(state.time_color[1]<state.weather_color[1]){
-                var differ =(state.weather_color[1]-state.time_color[1])/12;
-                for(var i=1;i<12;i++) state.palette[i-1][1]=state.time_color+differ*i;
+                var differ2 =(state.weather_color[1]-state.time_color[1])/11;
+                for(var i=0;i<12;i++) {
+                    state.palette_g.push(state.time_color[1]+differ2*i);
+                }
+                state.palette.push(state.palette_g);
             }
-            else{
-                var differ =(state.time_color[1]-state.weather_color[1])/12;
-                for(var i=1;i<12;i++) state.palette[i-1][1]=state.weather_color+differ*i;
+            if (state.time_color[1]>state.weather_color[1]){ 
+                var differ2 =(state.time_color[1]-state.weather_color[1])/11;
+                for(var i=0;i<12;i++) {
+                    state.palette_g.push(state.time_color[1]-differ2*i);
+                }
+                state.palette.push(state.palette_g);
             }
             //b
             if(state.time_color[2]<state.weather_color[2]){
-                var differ =(state.weather_color[2]-state.time_color[2])/12;
-                for(var i=1;i<12;i++) state.palette[i-1][2]=state.time_color+differ*i;
+                var differ =(state.weather_color[2]-state.time_color[2])/11;
+                for(var i=0;i<12;i++) {
+                    state.palette_b.push(state.time_color[2]+differ*i);
+                }
+                state.palette.push(state.palette_b);
             }
-            else{
-                var differ =(state.time_color[2]-state.weather_color[2])/12;
-                for(var i=1;i<12;i++) state.palette[i-1][2]=state.weather_color+differ*i;
+            if (state.time_color[2]>state.weather_color[2]){
+                var differ =(state.time_color[2]-state.weather_color[2])/11;
+                for(var i=0;i<12;i++) {
+                    state.palette_b.push(state.time_color[2]-differ*i);
+                }
+                state.palette.push(state.palette_b);
             }
         }
     },
@@ -194,6 +224,7 @@ export default new Vuex.Store({
             axios.get(`https://api.openweathermap.org/data/2.5/weather?q=Incheon&appid=b33642b32e9e7870547c36109f42a437`)
                 .then((result)=>{
                     commit('generateWeatherDes',result.data.weather[0].id);
+                    commit('paletteColor');
                     //state.city= result.data.sys.country+","+result.data.name+"시";
                     //state.weather=result.data.weather[0].id;
                 })
@@ -202,5 +233,8 @@ export default new Vuex.Store({
                 // })
 
         },
-    }
+    },
+    plugins:[
+        createPersistedState(),
+    ]
 })

@@ -70,7 +70,6 @@ export default {
 .card-list {
     // margin: 50px 20px;
     text-align: center;
-
     ul{
         display: flex;
         list-style: none;

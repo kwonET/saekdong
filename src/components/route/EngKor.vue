@@ -1,6 +1,6 @@
 <!--2. 한영 선택 페이지-->
 <template>
-  <div id="lang" style="userStyle" background-color="rgb(var(--r),var(--g),var(--b))">
+  <div id="lang" :style="userStyle" style>
       <div class="container">
         <div class="choose-container">
           <div class="txt-container">
@@ -8,7 +8,7 @@
             <h3 class="eng-txt">Choose your language.</h3>
           </div>
           <div class="btn-container">
-            <button class="Btn" @click="KorClk()" :class="{select:korClicked}">
+            <button class="Btn" @click="KorClk()" :class="{select:KorClicked}">
                 <span>
                 한국어
                 </span>
@@ -24,7 +24,8 @@
         </div>
 
         <!-- 다음버튼 -->
-      <NextBtn v-on:toNext="toNextPage"></NextBtn>
+      <NextBtn v-if="this.language=='ko'" v-bind:propsdata="BtnKorTxt" v-on:toNext="toNextPage"></NextBtn>
+      <NextBtn v-if="this.language=='en'" v-bind:propsdata="BtnEngTxt" v-on:toNext="toNextPage"></NextBtn>
       </div>
   </div>
 </template>
@@ -36,8 +37,9 @@ export default {
   name:'About',
   data(){
     return {
+      BtnKorTxt:'다음',
+      BtnEngTxt:'Next',
       EngClicked:false, KorClicked:false,
-      palette:[],
     }
   },
   computed:{
@@ -49,41 +51,16 @@ export default {
     },
     weatherColor(){
         return this.$store.state.weather_color;
-    }, //weatherColor
+    }, 
     paletteColor(){
-            //r
-            if(this.timeColor[0]<this.weatherColor[0]){
-                var differ =(this.weatherColor[0]-this.timeColor[0])/12;
-                this.palette[0]=this.timeColor+differ*1;
-            }
-            else{
-                var differ =(this.timeColor[0]-this.weatherColor[0])/12;
-                this.palette[0]=this.weatherColor+differ*1;
-            }
-            //g
-            if(this.timeColor[1]<this.weatherColor[1]){
-                var differ =(this.weatherColor[1]-this.timeColor[1])/12;
-                this.palette[1]=this.timeColor+differ*1;
-            }
-            else{
-                var differ =(this.timeColor[1]-this.weatherColor[1])/12;
-                this.palette[1]=this.weatherColor+differ*1;
-            }
-            //b
-            if(this.timeColor[2]<this.weatherColor[2]){
-                var differ =(this.weatherColor[2]-this.timeColor[2])/12;
-                this.palette[2]=this.timeColor+differ*1;
-            }
-            else{
-                var differ =(this.timeColor[2]-this.weatherColor[2])/12;
-                this.palette[2]=this.weatherColor+differ*1;
-            }
+        return this.$store.state.palette;
     },
     userStyle(){
       return{
-        '--r':this.palette[0],
-        '--g':this.palette[1],
-        '--b':this.palette[2],
+        //home = 0번째
+        '--r':this.paletteColor[0][0],
+        '--g':this.paletteColor[1][0],
+        '--b':this.paletteColor[2][0],
       }
     }
   },
@@ -108,7 +85,6 @@ export default {
   created(){
     this.$store.dispatch('callWeather');
     this.$store.dispatch('callDate');
-    this.paletteColor();
   },
   components:{
     NextBtn
@@ -126,6 +102,7 @@ body{
   left:0;
   width:100vw;
   height:100vh;
+  background-color: rgb(var(--r),var(--g),var(--b));
 }
 .container{
   height:100%;

@@ -1,8 +1,8 @@
 <template>
-<div id="play2">
+<div id="play2" :style="userStyle" style>
     <div class="text-container">
         <span v-if="this.language=='ko'">이제 앞쪽에 펼쳐진<br> 색동 나라의 풍경속에서<br> 당신의 요술봉을 확인해 보세요</span>
-        <span v-if="this.language=='en'">Now let’s check out your magic wand<br> in the scenery of Saekdong Land coming next.</span>
+        <span v-if="this.language=='en'">Now let’s check out your magic<br> wand in the scenery of<br> Saekdong Land coming next.</span>
     </div>
   <div class="progress">
     <span>{{ percent }} %</span>
@@ -44,7 +44,28 @@ export default {
         language(){
             return this.$store.state.language;
         },
+        timeColor(){
+          return this.$store.state.time_color;
+        },
+        weatherColor(){
+            return this.$store.state.weather_color;
+        }, 
+        paletteColor(){
+            return this.$store.state.palette;
+        },
+        userStyle(){
+          return{
+            //home = 0번째
+            '--r':this.paletteColor[0][8],
+            '--g':this.paletteColor[1][8],
+            '--b':this.paletteColor[2][8],
+          }
+        }
     },
+      created(){
+        this.$store.dispatch('callWeather');
+        this.$store.dispatch('callDate');
+      },
 }
 </script>
 
@@ -59,15 +80,17 @@ body{
     left:0;
     width:100%;
     height:100%;
-    background-color: #19A5E2;
+    background-color: rgb(var(--r),var(--g),var(--b));
 }
 .text-container{
+    width:70%;
     height:30%;
     display:flex;
     justify-content: center;
     align-items: center;
 
     text-align: center;
+    margin-left:15%;
     margin-top:20%;
 }
 .progress{
