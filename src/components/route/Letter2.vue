@@ -92,13 +92,13 @@ body{
   /* flex-basis: 524px; */
 }
 .lett-container{
-  padding-top:55%;
+  // padding-top:55%;
   flex-grow: 8;
 
   display: flex;
   flex-direction: column;
   text-align: center;
-  justify-items: center;
+  justify-content: center;
   align-items: center;
 }
 .btn-container{
@@ -122,15 +122,15 @@ span{
   color: #000000;
 }
 .img-container{
-    padding-top:20%;
-    width:100%;
-    height:50%;
-    margin-top:0;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  width:100%;
+  height:50%;
 }
 .img-container>img{
-    // width:70%;
-    // height:60%;
-    max-width: 50.3248vw;
-    height: 18.7322vh;
+    width:45%;
+    height:34%;
 }
 </style>

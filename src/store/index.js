@@ -11,6 +11,10 @@ Vue.use(Vuex);
 
 //export default new Vuex.Store(
 export default new Vuex.Store({
+    modules:{},
+    plugins:[
+        createPersistedState(),
+    ],
     state:{
         //ver:'guest',
         //openweather api
@@ -143,6 +147,9 @@ export default new Vuex.Store({
         nextCard:state=>{
             state.currentIndex++;
         },
+        initCard:state=>{
+            state.currentIndex=0;
+        },
         // color 
         generateNow:(state,payload)=>{
             if(payload>=6 && payload<12){state.now='아침'; state.time_color=state.color[0].rgb;}
@@ -234,7 +241,4 @@ export default new Vuex.Store({
 
         },
     },
-    plugins:[
-        createPersistedState(),
-    ]
 })

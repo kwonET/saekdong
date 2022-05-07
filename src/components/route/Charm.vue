@@ -1,50 +1,58 @@
 <template>
 <div id="charm" :style="userStyle" style>
-    <div class="text-container" :style="userStyle" style>
-        <h3 v-if="this.language=='ko'">이 순간, 색동요술봉의 힘으로 당신의 염원이 세계에 녹아 들어 작동하기 시작했습니다!</h3>
-        <h3 v-if="this.language=='en'">Your wish has now become the part of the world with the power of Saekdong Magic Wand!</h3>
-    </div>
-    <div class="charm-container">
-        <img src="../../assets/charm.png" alt="">
-        <div class="charm-content">
-            <div class="mini-container">
-                <div class="mini-rect"></div>
-                <div class="mini-shape"></div>
-                <div class="mini-wish" > 
-                    <div class="container">
-                       <span class="black">{{ userWish }}</span> 
+        <div class="text-container">
+            <div class="text-show">
+                <h3 v-if="this.language=='ko'">이 순간, 색동요술봉의 힘으로 당신의 염원이 세계에 녹아 들어 작동하기 시작했습니다!</h3>
+                <h3 v-if="this.language=='en'">Your wish has now become the part of the world with the power of Saekdong Magic Wand!</h3>
+            </div>
+        </div>
+        <div class="charm-container">
+            <img src="../../assets/charm.png" alt="">
+            <div class="charm-content">
+                <div class="mini-container">
+                    <div class="mini-rect"></div>
+                    <div class="mini-shape">
+                        <img class="element" :src="require(`../../assets/pngreplace/Spr_${imgName[2]}.png`)" alt="">
+                    </div>
+                    <div class="mini-wish" > 
+                        <span class="black">{{ userWish }}</span> 
                     </div>
                 </div>
+                <div class="charm-text">
+                    <span class="red" v-if="this.language=='ko'">당신의 염원은<br> 곧 이루어질 것입니다.<br> 색동 요술나라는<br> 당신의 앞날을 축복합니다</span>
+                    <span class="red" v-if="this.language=='en'">Your wish will come<br> true soon. You have<br> the blessing of Saekdong<br> Magic Land for your future.</span>
+                </div>
             </div>
-            <div class="charm-text">
-                <span class="red" v-if="this.language=='ko'">당신의 염원은<br> 곧 이루어질 것입니다.<br> 색동 요술나라는<br> 당신의 앞날을 축복합니다</span>
-                <span class="red" v-if="this.language=='en'">Your wish will come<br> true soon. You have<br> the blessing of Saekdong<br> Magic Land for your future.</span>
+        </div>
+        <div class="btn-container">
+            <div class="btn1">
+                <SaveBtn v-if="this.language=='ko'" v-bind:propsdata="SaveKorTxt" v-on:toNext="toNextPage()"></SaveBtn>
+                <SaveBtn v-if="this.language=='en'" v-bind:propsdata="SaveEngTxt" v-on:toNext="toNextPage()"></SaveBtn>
+            </div>
+            <div class="btn2">
+                <!-- 다음버튼 -->
+                <NextBtn v-if="this.language=='ko'" v-bind:propsdata="BtnKorTxt" v-on:toNext="toNextPage()"></NextBtn>
+                <NextBtn v-if="this.language=='en'" v-bind:propsdata="BtnEngTxt" v-on:toNext="toNextPage()"></NextBtn>
             </div>
         </div>
     </div>
-        <!-- 다음버튼 -->
-      <NextBtn v-if="this.language=='ko'" v-bind:propsdata="BtnKorTxt" v-on:toNext="toNextPage"></NextBtn>
-      <NextBtn v-if="this.language=='en'" v-bind:propsdata="BtnEngTxt" v-on:toNext="toNextPage"></NextBtn>
-     
-</div>
 </template>
 
 <script>
 import NextBtn from '../common/NextBtn.vue'
+import SaveBtn from '../common/SaveBtn.vue'
 
 export default {
     data(){
         return{
+            SaveKorTxt:'부적 저장하기',
+            SaveEnfTxt:'Save the Charm',
             BtnKorTxt:'탑 보러 가기',
             BtnEngTxt:'See my tower',
             userObj:{},
             userWish:'',
+            imgName:['C-2','A-8','B-9'],
         };
-    },
-    methods:{
-        toNextPage(){
-            this.$router.replace('/tower');
-        }
     },
     computed:{
         language(){
@@ -60,22 +68,33 @@ export default {
             return this.$store.state.palette;
         },
         userStyle(){
-        return{
-            //home = 0번째
-            '--r':this.paletteColor[0][9],
-            '--g':this.paletteColor[1][9],
-            '--b':this.paletteColor[2][9],
-        }
+            return{
+                //home = 0번째
+                '--r':this.paletteColor[0][9],
+                '--g':this.paletteColor[1][9],
+                '--b':this.paletteColor[2][9],
+            }
         }
     },
+    methods:{
+        toNextPage(){
+            this.$router.replace('/tower');
+        }
+    },
+    components:{
+        NextBtn,
+        SaveBtn
+    },  
     created(){
-        this.userWish=localStorage.key(localStorage.length-1);
+        if(localStorage.key(localStorage.length-1)!='loglevel:webpack-dev-server'){
+            this.userWish=localStorage.key(localStorage.length-1);
+        }
+        else{
+            this.userWish=localStorage.key(localStorage.length-2);
+        }
         this.$store.dispatch('callWeather');
         this.$store.dispatch('callDate');
     },
-    components:{
-        NextBtn
-    },  
 }
 </script>
 
@@ -98,13 +117,14 @@ body{
     align-items: center;
     text-align: center;
     width:80%;
-    height:60%;
+    height:30%;
     margin-left:10%;
-    margin-top:-30%;
+}
+.text-show{
+    width:100%;
+    height:100%;
 }
 h3{
-    margin:0 auto;
-
     font-style: medium;
     font-weight: 400;
     font-size: 4.4393vw;
@@ -116,7 +136,7 @@ h3{
 }
 img{
     position: absolute;
-    top:25%;
+    top:22%;
     left:20%;
     width:60%;
     height:50%;
@@ -149,30 +169,29 @@ img{
 .mini-shape{
     position: absolute;
     z-index: 100;
-    width: 200px;
-    height: 200px;
-    top:8%;
+    /* width: 400px;
+    height: 400px; */
 
-    background: linear-gradient(rgb(115, 255, 0),rgb(255, 0, 0));
-    border-radius: 50%;
+    width:100%;
+    height:40%;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 .mini-wish{
     position: absolute;
     z-index: 100;
-    /* height:100%;
-    width:100%; */
-    top: 34%;
-}
-.container{
-    font-size:30px;
-    width:30%;
-    height:12%;
-    margin-left:30%;
-    white-space: nowrap;
+
+    height:10%;
+    width:100%;
+    top: 32%;
 
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
+    justify-content: center;
 }
 .black{
     margin:0 auto;
@@ -209,4 +228,10 @@ img{
 
     color: #FF0600;
 }
+.btn-container{
+    display: flex;
+    flex-direction: column;
+
+}
+
 </style>

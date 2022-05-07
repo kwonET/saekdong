@@ -3,8 +3,8 @@
     <div class="all-container">
       <div class="lett-container">
         <div class="text-container">
-          <span v-if="this.language=='ko'"><b>염원 메세지</b>를 써주세요.</span>
-          <span v-if="this.language=='en'">Write down <b>your wish</b>.</span>
+          <span v-if="this.language=='ko'">염원 메세지를 써주세요.</span>
+          <span v-if="this.language=='en'">Write down your wish.</span>
         </div>
       
         <div class="z-container">
@@ -17,10 +17,12 @@
           </div>
         </div>
       </div>
-      <!-- <RemoveBtn v-if="this.version=='staff'" v-on:clearAll="ClearAllItems"></RemoveBtn> -->
-       <NextBtn v-if="this.language=='ko'" v-bind:propsdata="BtnKorTxt" v-on:toNext="toNextPage()"></NextBtn>
-       <NextBtn v-if="this.language=='en'" v-bind:propsdata="BtnEngTxt" v-on:toNext="toNextPage()"></NextBtn>
- 
+
+      <div class="btn-container">
+        <!-- <RemoveBtn v-if="this.version=='staff'" v-on:clearAll="ClearAllItems"></RemoveBtn> -->
+        <NextBtn v-if="this.language=='ko'" v-bind:propsdata="BtnKorTxt" v-on:toNext="toNextPage()"></NextBtn>
+        <NextBtn v-if="this.language=='en'" v-bind:propsdata="BtnEngTxt" v-on:toNext="toNextPage()"></NextBtn>
+      </div>
     </div>
   </div>
 </template>
@@ -101,16 +103,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-// *:lang(ko){
-//   *:not(:lang(ko)){
-//     display: none;
-//   }
-// }
-// *:lang(en){
-//   *:not(:lang(en)){
-//     display: none;
-//   }
-// }
+*{
+    font-size:16px;
+}
 body{
   margin:0;
 }
@@ -123,32 +118,34 @@ body{
   background-color: rgb(var(--r),var(--g),var(--b));
 }
 .all-container{
+
+  height:100%;
+  width: 100%;
   display: flex;
-  height:100vh;
-  flex-basis: 100vh;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+//   flex-wrap:wrap;
   /* flex-basis: 524px; */
 }
 .lett-container{
+  // padding-top:55%;
+  flex-grow: 8;
+  width:100%;
   display: flex;
   flex-direction: column;
-  height:56.5875vh;
-  flex-basis:56.5875vh;
-  align-content: center;
-  /* justify-content: center; */
   text-align: center;
+  justify-content: center;
+  align-items: center;
 }
-.text-container {
-  margin-bottom: 7.0194vh;
+.btn-container{
+    flex-grow: 2;
 }
 span{
-  font-family: 'Gothic A1';
   font-style: normal;
   font-weight: 500;
   font-size: 5.6075vw;
-  line-height: 30px;
+  line-height: 4rem;
   /* identical to box height */
 
   text-align: center;
@@ -156,31 +153,37 @@ span{
 
   color: #000000;
 }
+
 .z-container{
-  width:50%;
-  height:100%;
-  margin-left:25%;
+  width:100%;
+  height:50%;
+  // margin-left:25%;
   display: flex;
-  align-content: center;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
 }
-.img-container>img{
-  width:50%;
-  height:50%;
-  //max-width: 50.3248vw;
-  //height: 27.7322vh;
-}
 .img-container{
-  position:absolute;
-  z-index: 1;
-
+  width:45%;
+  height:95%;
+  margin-top:0;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+.img-container>img{
+    width:100%;
+    height:60%;
+    // max-width: 50.3248vw;
+    // height: 18.7322vh;
 }
 .input-container {
   width:30%;
   height:9%;
   position:absolute;
   z-index: 2;
-  margin-top:9%;
+  margin-top:-20%; 
 }
 .input-container input{
   width:90%;

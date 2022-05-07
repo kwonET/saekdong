@@ -58,13 +58,13 @@ body{
     background-color: rgb(var(--r),var(--g),var(--b));
 }
 .container{
-    height:80%;
+    height:100%;
     display:flex;
     justify-content: center;
     align-items: center;
 
     text-align: center;
-    margin:20% auto;
+    /* margin:20% auto; */
 }
 span{
     margin:0 auto;

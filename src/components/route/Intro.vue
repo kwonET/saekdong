@@ -69,6 +69,7 @@ export default {
     created(){
       this.$store.dispatch('callWeather');
       this.$store.dispatch('callDate');
+      this.$store.commit('initCard');
   },
 }
 </script>

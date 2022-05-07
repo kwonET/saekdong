@@ -101,8 +101,8 @@ body{
   position: absolute;
   top:0;
   left:0;
-  width:100vw;
-  height:100vh;
+  width:100%;
+  height:100%;
   background:linear-gradient(RGB(var(--s)),RGB(var(--e)));
   /* background: linear-gradient(rgb(var(--s-r),var(--s-g),var(--s-b)),rgb(var(--e-r),var(--e-g),var(--e-b))); */
   /* background: linear-gradient(rgb(v-bind(s_r),v-bind(s_g),v-bind(s_b)),rgb(v-bind(e_r),v-bind(e_g),v-bind(e_b))); */
