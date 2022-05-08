@@ -30,9 +30,11 @@ export default {
             BtnEngTxt:'See my magic wand',
 
             point:["A-2","A-8","B-4","B-6","C-5","A-10"],
+            //c-1 뜨는 문제 + c-2, c-8
             between:["A-1","A-3","A-4","B-2","B-5","B-7","B-8","B-10","B-11","C-1","C-2","C-3","C-4","C-7","C-8"],
+            //a-5 ~ b-1 살짝 뜸 + c-9
             none:["A-5","A-6","A-7","A-9","A-11","B-1","B-3","C-6","C-9","C-10"],
-            imgName:['C-5','B-9','A-3'],
+            imgName:['C-10','C-10','B-9'],
 
             bottom_point:false,
             bottom_between:false,
@@ -67,25 +69,17 @@ export default {
         toNextPage(){
             this.$router.replace('/stick');
         },
-        bottHeart(){
-            for(i=0;i<this.point.length;i++){
-                if(this.imgName[1]==this.point[i]){
-                    this.bottom_between=false;
-                    this.bottom_point=true;
-                }
-            }
-            for(i=0;i<this.between.length;i++){
-                if(this.imgName[1]==this.between[i]){
-                    this.bottom_between=true;
-                    this.bottom_point=false;
-                }
-            }
-            for(i=0;i<this.none.length;i++){
-                if(this.imgName[1]==this.none[i]){
-                    this.bottom_between=false;
-                    this.bottom_point=false;
-                }
-            }
+        bottomHeartP(){
+            this.bottom_between=false;
+            this.bottom_point=true; 
+        },
+        bottomHeartB(){
+            this.bottom_between=true;
+            this.bottom_point=false;
+        },
+        bottomHeartN(){
+            this.bottom_between=false;
+            this.bottom_point=false;
         },
         midHeartP(){
             this.mid_between=false;
@@ -98,8 +92,7 @@ export default {
         midHeartN(){
             this.mid_between=false;
             this.mid_point=false;
-        }
-
+        },
     },
     created(){
         this.$store.dispatch('callWeather');
@@ -108,27 +101,26 @@ export default {
     mounted(){
         //하트가 첫번째로 쌓이는 경우 2
         if(this.imgName[2]=="B-9"){
-            this.order=1;
-            this.bottHeart();
-        }
+            if((this.point).includes(this.imgName[1])){
+                this.bottomHeartP();
+            }
+            else if((this.between).includes(this.imgName[1])){
+                this.bottomHeartB();
+            }
+            else if((this.none).includes(this.imgName[1])){
+                this.bottomHeartN();
+            }
+        }  
         //하트가 두번째로 쌓이는 경우 1
         else if(this.imgName[1]=="B-9"){
-            this.order=2;
-            for(i=0;i<this.point.length;i++){
-                if(this.imgName[0]==this.point[i]){
-                    this.order=3;
-                    this.midHeartP();
-                }
+            if((this.point).includes(this.imgName[0])){
+                this.midHeartP();
             }
-            for(i=0;i<this.between.length;i++){
-                if(this.imgName[0]===this.between[i]){
-                    this.midHeartB();
-                }
+            else if((this.between).includes(this.imgName[0])){
+                this.midHeartB();
             }
-            for(i=0;i<this.none.length;i++){
-                if(this.imgName[0]===this.none[i]){
-                    this.midHeartN();
-                }
+            else if((this.none).includes(this.imgName[0])){
+                this.midHeartN();
             }
         }  
     },
@@ -207,12 +199,12 @@ h3{
     margin-top:-3.5%;
 }
 .heart_b_b{
-    margin-top:-1.3%;
+    margin-top:-1.2%;
 }
 .heart_m_p{
     margin-top:-3.5%;
 }
 .heart_m_b{
-    margin-top:-1.35%;
+    margin-top:-1.3%;
 }
 </style>
