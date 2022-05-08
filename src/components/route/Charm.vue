@@ -1,11 +1,12 @@
 <template>
 <div id="charm" :style="userStyle" style>
-        <div class="text-container">
+        <div class="text-container" data-html2canvas-ignore="true">
             <div class="text-show">
                 <h3 v-if="this.language=='ko'">이 순간, 색동요술봉의 힘으로 당신의 염원이 세계에 녹아 들어 작동하기 시작했습니다!</h3>
                 <h3 v-if="this.language=='en'">Your wish has now become the part of the world with the power of Saekdong Magic Wand!</h3>
             </div>
         </div>
+
         <div class="charm-container">
             <img src="../../assets/charm.png" alt="">
             <div class="charm-content">
@@ -24,10 +25,11 @@
                 </div>
             </div>
         </div>
-        <div class="btn-container">
+
+        <div class="btn-container" data-html2canvas-ignore="true">
             <div class="btn1">
-                <SaveBtn v-if="this.language=='ko'" v-bind:propsdata="SaveKorTxt" v-on:toNext="toNextPage()"></SaveBtn>
-                <SaveBtn v-if="this.language=='en'" v-bind:propsdata="SaveEngTxt" v-on:toNext="toNextPage()"></SaveBtn>
+                <SaveBtn v-if="this.language=='ko'" v-bind:propsdata="SaveKorTxt" v-on:toNext="makePDF()"></SaveBtn>
+                <SaveBtn v-if="this.language=='en'" v-bind:propsdata="SaveEngTxt" v-on:toNext="makePDF()"></SaveBtn>
             </div>
             <div class="btn2">
                 <!-- 다음버튼 -->
@@ -41,12 +43,14 @@
 <script>
 import NextBtn from '../common/NextBtn.vue'
 import SaveBtn from '../common/SaveBtn.vue'
+import html2canvas from 'html2canvas'
+import jsPDF from 'jspdf'
 
 export default {
     data(){
         return{
             SaveKorTxt:'부적 저장하기',
-            SaveEnfTxt:'Save the Charm',
+            SaveEngTxt:'Save the Charm',
             BtnKorTxt:'탑 보러 가기',
             BtnEngTxt:'See my tower',
             userObj:{},
@@ -79,8 +83,48 @@ export default {
     methods:{
         toNextPage(){
             this.$router.replace('/tower');
-        }
-    },
+        },
+        makePDF (selector = '.charm-container') {
+			window.html2canvas = html2canvas //Vue.js 특성상 window 객체에 직접 할당해야한다.
+			let that = this
+			let pdf = new jsPDF('p', 'mm', 'a4')
+			let canvas = pdf.canvas
+			const pageWidth = 210 //캔버스 너비 mm
+			const pageHeight = 295 //캔버스 높이 mm
+			canvas.width = pageWidth
+
+			let ele = document.querySelector(selector)
+			let width = ele.offsetWidth // 셀렉트한 요소의 px 너비
+			let height = ele.offsetHeight // 셀렉트한 요소의 px 높이
+			let imgHeight = pageWidth * height/width // 이미지 높이값 px to mm 변환
+
+			if(!ele){
+				console.warn(selector + ' is not exist.')
+				return false
+			}
+
+			html2canvas(ele, {
+				onrendered: function(canvas) {
+					let position = 0
+					const imgData = canvas.toDataURL('image/png')
+					pdf.addImage(imgData, 'png', 0, position, pageWidth, imgHeight, undefined, 'slow')
+
+					//Paging 처리
+					let heightLeft = imgHeight //페이징 처리를 위해 남은 페이지 높이 세팅.
+					heightLeft -= pageHeight
+					while (heightLeft >= 0) {
+						position = heightLeft - imgHeight
+						pdf.addPage();
+						pdf.addImage(imgData, 'png', 0, position, pageWidth, imgHeight)
+						heightLeft -= pageHeight
+					}
+
+					pdf.save(that.propTitle.toLowerCase() +'.pdf')
+				},
+            });	
+
+		},
+	},
     components:{
         NextBtn,
         SaveBtn

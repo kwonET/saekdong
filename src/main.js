@@ -18,6 +18,7 @@ import Play2 from './components/route/Play2.vue'
 import Charm from './components/route/Charm.vue'
 import Tower from './components/route/Tower.vue'
 import Stick from './components/route/Stick.vue'
+import Top from './components/route/Top.vue'
 
 import store from './store'
 
@@ -33,6 +34,7 @@ const routes = [ // 라우트 설정
     { path: '/charm', component: Charm },
     { path: '/tower', component: Tower },
     { path: '/stick', component: Stick },
+    { path: '/top', component: Top },
 ]
 const router = new VueRouter({
     mode: 'history',
