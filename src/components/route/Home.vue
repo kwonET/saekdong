@@ -70,6 +70,7 @@
         }
     },
     created(){
+      //this.$store.dispatch('geofind');
       this.$store.dispatch('callWeather');
       this.$store.dispatch('callDate');
       // this.$store.commit('pickTimeColor');

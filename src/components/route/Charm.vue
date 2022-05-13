@@ -7,7 +7,7 @@
             </div>
         </div>
 
-        <div class="charm-container">
+        <div class="charm-container" ref="printMe">
             <img src="../../assets/charm.png" alt="">
             <div class="charm-content">
                 <div class="mini-container">
@@ -43,8 +43,6 @@
 <script>
 import NextBtn from '../common/NextBtn.vue'
 import SaveBtn from '../common/SaveBtn.vue'
-import html2canvas from 'html2canvas'
-import jsPDF from 'jspdf'
 
 export default {
     data(){
@@ -84,8 +82,27 @@ export default {
         toNextPage(){
             this.$router.replace('/tower');
         },
+        makePDF(){
+            var node = document.getElementsByClassName('charm-container');
+                htmlToImage.toPng(node)
+                .then(function (dataUrl) {
+                    var img = new Image();
+                    img.src = dataUrl;
+                    document.body.appendChild(img);
+                })
+                .catch(function (error) {
+                    console.error('oops, something went wrong!', error);
+                });
+            /*
+            htmlToImage.toPng(document.getElementsByClassName('charm-container'))
+                .then(function (dataUrl) {
+                    download(dataUrl, 'my-charm.png');
+                });
+                */
+        },
+        /*
         makePDF (selector = '.charm-container') {
-			window.html2canvas = html2canvas //Vue.js 특성상 window 객체에 직접 할당해야한다.
+			this.$window.html2canvas = html2canvas //Vue.js 특성상 window 객체에 직접 할당해야한다.
 			let that = this
 			let pdf = new jsPDF('p', 'mm', 'a4')
 			let canvas = pdf.canvas
@@ -122,9 +139,10 @@ export default {
 					pdf.save(that.propTitle.toLowerCase() +'.pdf')
 				},
             });	
-
-		},
-	},
+        
+		},*/
+    },
+    
     components:{
         NextBtn,
         SaveBtn
@@ -140,6 +158,8 @@ export default {
         this.$store.dispatch('callDate');
     },
 }
+
+
 </script>
 
 <style>
@@ -163,11 +183,12 @@ body{
     width:80%;
     height:30%;
     margin-left:10%;
+    margin-top:0%;
 }
-.text-show{
+/* .text-show{
     width:100%;
     height:100%;
-}
+} */
 h3{
     font-style: medium;
     font-weight: 400;

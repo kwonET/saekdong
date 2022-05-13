@@ -9,13 +9,23 @@
       <StickBtn v-if="this.language=='en'" v-bind:propsdata="BtnEngTxt" v-on:toNext="toNextPage"></StickBtn>
     </div>
     <div class="wish-top">
-        <img id="element" :src="require(`../../assets/pngreplace/Spr_${imgName[0]}.png`)" alt="">
-        <img id="element" 
-            :class="{'heart_m_p': mid_point == true,'heart_m_b' : mid_between == true,}"
-            :src="require(`../../assets/pngreplace/Spr_${imgName[1]}.png`)" alt="">
-        <img id="element" 
-            :class="{'heart_b_p': bottom_point == true,'heart_b_b' : bottom_between == true,}"
-            :src="require(`../../assets/pngreplace/Spr_${imgName[2]}.png`)" alt="">
+        <div class="wish-shape">
+            <img id="element" :src="require(`../../assets/pngreplace/Spr_${imgName[0]}.png`)" alt="">
+            <img id="element" 
+                :class="{'heart_m_p': mid_point == true,'heart_m_b' : mid_between == true,}"
+                :src="require(`../../assets/pngreplace/Spr_${imgName[1]}.png`)" alt="">
+            <img id="element" 
+                :class="{'heart_b_p': bottom_point == true,'heart_b_b' : bottom_between == true,}"
+                :src="require(`../../assets/pngreplace/Spr_${imgName[2]}.png`)" alt="">
+            <!-- 임의의 도형들 -->
+            <img id="element" :src="require(`../../assets/pngreplace/Spr_${randomName[0]}.png`)" alt="">
+            <img id="element" 
+                :class="{'heart_m_p': mid_point == true,'heart_m_b' : mid_between == true,}"
+                :src="require(`../../assets/pngreplace/Spr_${randomName[1]}.png`)" alt="">
+            <img id="element" 
+                :class="{'heart_b_p': bottom_point == true,'heart_b_b' : bottom_between == true,}"
+                :src="require(`../../assets/pngreplace/Spr_${randomName[2]}.png`)" alt="">
+        </div>
     </div>
   </div>
 </template>
@@ -35,7 +45,7 @@ export default {
             //a-5 ~ b-1 살짝 뜸 + c-9
             none:["A-5","A-6","A-7","A-9","A-11","B-1","B-3","C-6","C-9","C-10"],
             imgName:['C-10','C-10','B-9'],
-
+            randomName:['C-1','B-2','A-4'],
             bottom_point:false,
             bottom_between:false,
             mid_point:false,
@@ -182,17 +192,17 @@ h3{
     z-index: 0;
 }
 .wish-top{
-    width:100%;
-    height:70%;
-    
-    display: flex;
+    display:flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
-
+    align-items: center;
+    text-align: center;
+    height:70%;
 }
 #element{
     width:40%;
+    margin-left:30%;
+    margin-right:30%;
 }
 /* 하트 */
 .heart_b_p{

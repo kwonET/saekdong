@@ -7,6 +7,21 @@ import bus from './components/utils/bus.js'
 import axios from 'axios'
 Vue.prototype.$http=axios
 
+/*
+import VueHtml2Canvas from 'vue-html2canvas';
+Vue.use(VueHtml2Canvas);
+import html2canvas from 'html2canvas'
+import jsPDF from 'jspdf'
+*/
+
+
+import * as htmlToImage from 'html-to-image';
+Vue.use(htmlToImage)
+
+import VueGeolocationApi from 'vue-geolocation-api'
+Vue.use(VueGeolocationApi/*, { ...options } */)
+import 'regenerator-runtime/runtime'
+
 import App from './App.vue' // 라우팅 페이지 viewer app
 import Home from './components/route/Home.vue' // 라우팅 대상 페이지
 import Lang from './components/route/EngKor.vue' // 라우팅 대상 페이지

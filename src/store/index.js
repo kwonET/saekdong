@@ -6,6 +6,9 @@ import axios from 'axios';
 Vue.prototype.$http = axios;
 import { posix } from 'path';
 import { stat } from "fs";
+
+import VueGeolocationApi from 'vue-geolocation-api'
+Vue.use(VueGeolocationApi/*, { ...options } */)
 // axios.defaults.timeout=6000;
 Vue.use(Vuex);
 
@@ -16,6 +19,9 @@ export default new Vuex.Store({
         createPersistedState(),
     ],
     state:{
+        latitude: '',
+        longitude: '',
+        //textContent: '',
         //ver:'guest',
         //openweather api
         now:"지금은..",
@@ -30,6 +36,7 @@ export default new Vuex.Store({
         ver:'staff',
         language: 'ko',
         currentIndex:0,
+
         color:[
             { 
                 feature:'아침',
@@ -150,6 +157,11 @@ export default new Vuex.Store({
         initCard:state=>{
             state.currentIndex=0;
         },
+        generateLoc:(state,payload)=>{
+            state.latitude = payload.coords.latitude;
+            state.longitude = payload.coords.longitude;
+            //state.textContent = 'Your location data is ' + state.latitude + ', ' + state.longitude;
+        },
         // color 
         generateNow:(state,payload)=>{
             if(payload>=6 && payload<12){state.now='아침'; state.time_color=state.color[0].rgb;}
@@ -220,15 +232,43 @@ export default new Vuex.Store({
         }
     },
     actions:{
+        geofind:({commit})=>{
+            // if(!("geolocation" in navigator)) {
+            //     state.textContent = 'Geolocation is not available.';
+            //     return;
+            // }
+            //     state.textContent = 'Locating...'
+            
+            // get position
+            navigator.geolocation.getCurrentPosition(pos => {
+                commit('generateLoc',pos);
+            })
+                // err => {
+                //     state.textContent = err.message;
+                // })
+        },
         callDate:({commit})=>{
             //time
             var date=new Date();
             commit('generateNow', date.getHours());
         },
         callWeather:({commit})=>{
-            //const BASE_URL='https://api.openweathermap.org/data/2.5/weather?q=Incheon&appid=b33642b32e9e7870547c36109f42a437'
-            //this.$http.get(`${BASE_URL}`)
-            axios.get(`https://api.openweathermap.org/data/2.5/weather?q=Incheon&appid=b33642b32e9e7870547c36109f42a437`)
+            navigator.geolocation.getCurrentPosition(pos => {
+                commit('generateLoc',pos);
+                //const BASE_URL='https://api.openweathermap.org/data/2.5/weather?q=Incheon&appid=b33642b32e9e7870547c36109f42a437'
+                axios.get(`"https://api.openweathermap.org/data/2.5/weatther?lat=" + ${state.latitude} + "&lon=" + ${state.longitude} + "&appid=b33642b32e9e7870547c36109f42a437"`)
+                //axios.get(`https://api.openweathermap.org/data/2.5/weather?q=Incheon&appid=b33642b32e9e7870547c36109f42a437`)
+                    .then((result)=>{
+                        commit('generateWeatherDes',result.data.weather[0].id);
+                        commit('paletteColor');
+                        //state.city= result.data.sys.country+","+result.data.name+"시";
+                        //state.weather=result.data.weather[0].id;
+                    })
+                    // .catch((result)=>{
+                    //     commit('failWeatherDes',result);
+                    // })
+            })
+                axios.get(`https://api.openweathermap.org/data/2.5/weather?q=Incheon&appid=b33642b32e9e7870547c36109f42a437`)
                 .then((result)=>{
                     commit('generateWeatherDes',result.data.weather[0].id);
                     commit('paletteColor');
@@ -238,7 +278,6 @@ export default new Vuex.Store({
                 // .catch((result)=>{
                 //     commit('failWeatherDes',result);
                 // })
-
         },
     },
 })
