@@ -9,7 +9,6 @@
       <StickBtn v-if="this.language=='en'" v-bind:propsdata="BtnEngTxt" v-on:toNext="toNextPage"></StickBtn>
     </div>
     <div class="wish-top">
-        <div class="wish-shape">
             <img id="element" :src="require(`../../assets/pngreplace/Spr_${imgName[0]}.png`)" alt="">
             <img id="element" 
                 :class="{'heart_m_p': mid_point == true,'heart_m_b' : mid_between == true,}"
@@ -26,7 +25,6 @@
                 :class="{'heart_b_p': bottom_point == true,'heart_b_b' : bottom_between == true,}"
                 :src="require(`../../assets/pngreplace/Spr_${randomName[2]}.png`)" alt="">
         </div>
-    </div>
   </div>
 </template>
 

@@ -34,7 +34,7 @@ import Charm from './components/route/Charm.vue'
 import Tower from './components/route/Tower.vue'
 import Stick from './components/route/Stick.vue'
 import Top from './components/route/Top.vue'
-
+import Xr from './components/route/XR.vue'
 import store from './store'
 
 const routes = [ // 라우트 설정
@@ -50,6 +50,7 @@ const routes = [ // 라우트 설정
     { path: '/tower', component: Tower },
     { path: '/stick', component: Stick },
     { path: '/top', component: Top },
+    { path: '/XR', component: Xr },
 ]
 const router = new VueRouter({
     mode: 'history',
