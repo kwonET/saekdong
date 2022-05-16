@@ -39,6 +39,7 @@ export default {
         }, 1500);
     },
     created(){
+        this.$store.dispatch('geofind');
         this.$store.dispatch('callWeather');
         this.$store.dispatch('callDate');
   },

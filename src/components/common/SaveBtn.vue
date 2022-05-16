@@ -36,13 +36,16 @@ export default {
   top: 83%;
   left: 50%;
   width: 700px;
-  height: 135px;
+  height: 115px;
   margin-top: -150px;
   margin-left: -350px;
-
   background: #EE4C4C;
   border-radius: 3.5097vh;
   cursor:pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .NextBtn{
   position: absolute;
@@ -50,8 +53,8 @@ export default {
   top: 90%;
   left: 50%;
   width: 700px;
-  height: 135px;
-  margin-top: -120px;
+  height: 110px;
+  margin-top: -100px;
   margin-left: -350px;
   display: flex;
   align-items: center;

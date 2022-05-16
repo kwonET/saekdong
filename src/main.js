@@ -15,9 +15,6 @@ import jsPDF from 'jspdf'
 */
 
 
-import * as htmlToImage from 'html-to-image';
-Vue.use(htmlToImage)
-
 import VueGeolocationApi from 'vue-geolocation-api'
 Vue.use(VueGeolocationApi/*, { ...options } */)
 import 'regenerator-runtime/runtime'

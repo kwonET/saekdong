@@ -1,30 +1,43 @@
 <template>
   <div id="tower" :style="userStyle" style>
-    <div class="text-container">
-        <img class="carousel" src="../../assets/carousel_last.png" alt="">
-        <h3 v-if="this.language=='ko'">당신은 {{ order }}번째 소원탑을 쌓았습니다.</h3>
-            <h3 v-if="this.language=='en'">You have built the {{ order }} wish tower.</h3>
-      
-      <StickBtn v-if="this.language=='ko'" v-bind:propsdata="BtnKorTxt" v-on:toNext="toNextPage"></StickBtn>
-      <StickBtn v-if="this.language=='en'" v-bind:propsdata="BtnEngTxt" v-on:toNext="toNextPage"></StickBtn>
-    </div>
-    <div class="wish-top">
-            <img id="element" :src="require(`../../assets/pngreplace/Spr_${imgName[0]}.png`)" alt="">
-            <img id="element" 
-                :class="{'heart_m_p': mid_point == true,'heart_m_b' : mid_between == true,}"
-                :src="require(`../../assets/pngreplace/Spr_${imgName[1]}.png`)" alt="">
-            <img id="element" 
-                :class="{'heart_b_p': bottom_point == true,'heart_b_b' : bottom_between == true,}"
-                :src="require(`../../assets/pngreplace/Spr_${imgName[2]}.png`)" alt="">
-            <!-- 임의의 도형들 -->
-            <img id="element" :src="require(`../../assets/pngreplace/Spr_${randomName[0]}.png`)" alt="">
-            <img id="element" 
-                :class="{'heart_m_p': mid_point == true,'heart_m_b' : mid_between == true,}"
-                :src="require(`../../assets/pngreplace/Spr_${randomName[1]}.png`)" alt="">
-            <img id="element" 
-                :class="{'heart_b_p': bottom_point == true,'heart_b_b' : bottom_between == true,}"
-                :src="require(`../../assets/pngreplace/Spr_${randomName[2]}.png`)" alt="">
+    <div class="tower-container">
+        <div class="text-container">
+            <img class="carousel" src="../../assets/carousel_last.png" alt="">
+            <h3 v-if="this.language=='ko'"> 당신은 {{ this.idDB }}번째 소원탑을 쌓았습니다.</h3>
+            <h3 v-if="this.language=='en'">You have built the {{ this.$store.state.news.id }} wish tower.</h3>
+            <StickBtn v-if="this.language=='ko'" v-bind:propsdata="BtnKorTxt" v-on:toNext="toNextPage"></StickBtn>
+            <StickBtn v-if="this.language=='en'" v-bind:propsdata="BtnEngTxt" v-on:toNext="toNextPage"></StickBtn>
         </div>
+        <div class="wish-top">
+            <div class="element">
+                <img class="img-tag" :src="require(`../../assets/pngreplace/Spr_${imgName[0]}.png`)" alt="">
+            </div>
+            <div class="element">
+                <img class="img-tag"
+                    :class="{'heart_m_p': mid_point == true,'heart_m_b' : mid_between == true,}"
+                    :src="require(`../../assets/pngreplace/Spr_${imgName[1]}.png`)" alt="">
+            </div>
+            <div class="element">
+                <img class="img-tag"
+                    :class="{'heart_b_p': bottom_point == true,'heart_b_b' : bottom_between == true,}"
+                    :src="require(`../../assets/pngreplace/Spr_${imgName[2]}.png`)" alt="">
+            </div>
+            <!-- 임의의 도형들 -->
+            <div class="element">
+                <img class="img-tag" :src="require(`../../assets/pngreplace/Spr_${randomName[0]}.png`)" alt="">
+            </div>
+            <div class="element">
+                <img class="img-tag"
+                    :class="{'heart_m_p': mid_point == true,'heart_m_b' : mid_between == true,}"
+                    :src="require(`../../assets/pngreplace/Spr_${randomName[1]}.png`)" alt="">
+            </div>
+            <div class="element">
+                <img class="img-tag"
+                    :class="{'heart_b_p': bottom_point == true,'heart_b_b' : bottom_between == true,}"
+                    :src="require(`../../assets/pngreplace/Spr_${randomName[2]}.png`)" alt="">
+            </div>
+        </div>
+    </div>
   </div>
 </template>
 
@@ -33,6 +46,7 @@ import StickBtn from '../common/StickBtn.vue'
 export default {
     data(){
         return{
+            num:0,
             order:0,
             BtnKorTxt:'내 요술봉 링크 바로가기',
             BtnEngTxt:'See my magic wand',
@@ -63,6 +77,9 @@ export default {
         paletteColor(){
             return this.$store.state.palette;
         },
+        idDB(){
+            return this.$store.state.news;
+        },
         userStyle(){
             return{
                 //home = 0번째
@@ -74,6 +91,10 @@ export default {
         
     },
     methods:{
+        methodThatForcesUpdate(){ 
+            this.$router.go(this.$router.currentRoute);
+            console.log('update');
+        },
         toNextPage(){
             this.$router.replace('/stick');
         },
@@ -103,10 +124,17 @@ export default {
         },
     },
     created(){
+        this.$store.dispatch('geofind');
         this.$store.dispatch('callWeather');
         this.$store.dispatch('callDate');
+        this.$store.dispatch('FETCH_NEWS');
+
     },
     mounted(){
+
+        setTimeout(() => {
+            this.methodThatForcesUpdate();
+        }, 0.5);
         //하트가 첫번째로 쌓이는 경우 2
         if(this.imgName[2]=="B-9"){
             if((this.point).includes(this.imgName[1])){
@@ -138,7 +166,7 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
 body{
     margin:0;
 }
@@ -150,13 +178,21 @@ body{
     height:100%;
     background-color: rgb(var(--r),var(--g),var(--b));
 }
+.tower-container{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height:100%;
+    width:100%;
+}
 .text-container{
+    height:30%;
     display:flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
-    height:30%;
     /* height:58%;
     margin-top:-30%; */
 }
@@ -187,20 +223,25 @@ h3{
     right:10%;
     width:80%;
     height:10%;
-    z-index: 0;
+    /* z-index: 0; */
 }
 .wish-top{
+    height:70%;
+    width:100%;
     display:flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    text-align: center;
-    height:70%;
+    text-align:center;
+    /* display:table; */
 }
-#element{
-    width:40%;
-    margin-left:30%;
-    margin-right:30%;
+.element{
+    width:35%;
+    /* display:table-cell;
+    vertical-align:middle; */
+}
+.img-tag{
+    max-width:100%;
 }
 /* 하트 */
 .heart_b_p{

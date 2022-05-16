@@ -50,6 +50,14 @@ export default {
       }
   },
   methods:{
+    makePDF(){
+        var dataUrl='../../assets/';
+        var node = document.getElementById('stick');
+        htmlToImage.toPng(node)
+            .then(function (dataUrl) {
+                download(dataUrl, 'my-stick.png');
+        })
+    },
     bottomHeartP(){
         this.bottom_between=false;
         this.bottom_point=true; 
@@ -102,6 +110,7 @@ export default {
         }  
     },
     created(){
+        this.$store.dispatch('geofind');
         this.$store.dispatch('callWeather');
         this.$store.dispatch('callDate');
 }
@@ -128,7 +137,6 @@ body{
     flex-direction: column;
     align-items: center;
     justify-content: center;
-
 }
 .stick{
     width:50%;

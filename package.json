@@ -12,6 +12,7 @@
   "dependencies": {
     "axios": "^0.26.1",
     "downloadjs": "^1.4.7",
+    "howler": "^2.2.3",
     "html-to-image": "^1.9.0",
     "html2canvas": "^1.4.1",
     "jspdf": "^2.5.1",

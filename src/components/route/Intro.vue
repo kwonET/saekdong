@@ -67,9 +67,10 @@ export default {
       this.$el.addEventListener('nextCard', event => this.nextCard(event));
     },
     created(){
+      this.$store.commit('initCard');
+      this.$store.dispatch('geofind');
       this.$store.dispatch('callWeather');
       this.$store.dispatch('callDate');
-      this.$store.commit('initCard');
   },
 }
 </script>

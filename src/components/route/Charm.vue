@@ -6,12 +6,11 @@
                 <h3 v-if="this.language=='en'">Your wish has now become the part of the world with the power of Saekdong Magic Wand!</h3>
             </div>
         </div>
-
-        <div class="charm-container" ref="printMe">
-            <img src="../../assets/charm.png" alt="">
-            <div class="charm-content">
+        <div id="charm-save" class="charm-container" ref="printMe">
+            <img  src="../../assets/charm.png" alt="">
+            <div class="charm-content" >
                 <div class="mini-container">
-                    <div class="mini-rect"></div>
+                    <!-- <div class="mini-rect"></div> -->
                     <div class="mini-shape">
                         <img class="element" :src="require(`../../assets/pngreplace/Spr_${imgName[2]}.png`)" alt="">
                     </div>
@@ -25,7 +24,6 @@
                 </div>
             </div>
         </div>
-
         <div class="btn-container" data-html2canvas-ignore="true">
             <div class="btn1">
                 <SaveBtn v-if="this.language=='ko'" v-bind:propsdata="SaveKorTxt" v-on:toNext="makePDF()"></SaveBtn>
@@ -43,6 +41,9 @@
 <script>
 import NextBtn from '../common/NextBtn.vue'
 import SaveBtn from '../common/SaveBtn.vue'
+import * as htmlToImage from 'html-to-image';
+import download from 'downloadjs';
+import html2canvas from 'html2canvas';
 
 export default {
     data(){
@@ -82,25 +83,28 @@ export default {
         toNextPage(){
             this.$router.replace('/tower');
         },
+
         makePDF(){
-            var node = document.getElementsByClassName('charm-container');
-                htmlToImage.toPng(node)
-                .then(function (dataUrl) {
-                    var img = new Image();
-                    img.src = dataUrl;
-                    document.body.appendChild(img);
-                })
-                .catch(function (error) {
-                    console.error('oops, something went wrong!', error);
-                });
+            var dataUrl='../../assets/';
+            var node = document.getElementById('charm-save');
             /*
-            htmlToImage.toPng(document.getElementsByClassName('charm-container'))
+            htmlToImage.toPng(node)
+            .then(function (dataUrl) {
+                var img = new Image();
+                img.src = dataUrl;
+                document.body.appendChild(img);
+            })
+            .catch(function (error) {
+                console.error('oops, something went wrong!', error);
+            });
+            */
+            htmlToImage.toPng(node)
                 .then(function (dataUrl) {
                     download(dataUrl, 'my-charm.png');
                 });
-                */
         },
-        /*
+
+       /*
         makePDF (selector = '.charm-container') {
 			this.$window.html2canvas = html2canvas //Vue.js 특성상 window 객체에 직접 할당해야한다.
 			let that = this
@@ -139,10 +143,8 @@ export default {
 					pdf.save(that.propTitle.toLowerCase() +'.pdf')
 				},
             });	
-        
-		},*/
-    },
-    
+        */
+    },    
     components:{
         NextBtn,
         SaveBtn
@@ -154,9 +156,12 @@ export default {
         else{
             this.userWish=localStorage.key(localStorage.length-2);
         }
+        this.$store.dispatch('geofind');
         this.$store.dispatch('callWeather');
         this.$store.dispatch('callDate');
+        this.$store.dispatch('playSound_charm');
     },
+
 }
 
 
@@ -199,6 +204,12 @@ h3{
 
     color: #FFFFFF;
 }
+#charm-save{
+    top:22%;
+    left:20%;
+    width:100%;
+    height:100%;
+}
 img{
     position: absolute;
     top:22%;
@@ -217,12 +228,12 @@ img{
     flex-direction: column;
     align-items: center;
 
-    top:35%;
+    top:32%;
     left:20%;
     width:60%;
     height:50%;
 }
-.mini-rect{
+/* .mini-rect{
     position: absolute;
     z-index: 2;
     width: 60%;
@@ -230,7 +241,7 @@ img{
 
     background: rgba(255, 255, 255, 0.3);
     border-radius: 22px;
-}
+} */
 .mini-shape{
     position: absolute;
     z-index: 100;
@@ -276,7 +287,7 @@ img{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    top:39%;
+    top:36%;
     left:20%;
     width:60%;
     height:50%;
@@ -296,7 +307,5 @@ img{
 .btn-container{
     display: flex;
     flex-direction: column;
-
 }
-
 </style>

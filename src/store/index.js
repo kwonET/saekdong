@@ -7,6 +7,8 @@ Vue.prototype.$http = axios;
 import { posix } from 'path';
 import { stat } from "fs";
 
+import { fetchNewsList } from '../components/api/index.js';
+
 import VueGeolocationApi from 'vue-geolocation-api'
 Vue.use(VueGeolocationApi/*, { ...options } */)
 // axios.defaults.timeout=6000;
@@ -36,7 +38,7 @@ export default new Vuex.Store({
         ver:'staff',
         language: 'ko',
         currentIndex:0,
-
+        news:0,
         color:[
             { 
                 feature:'아침',
@@ -130,6 +132,9 @@ export default new Vuex.Store({
         }
     },
     mutations:{
+        SET_NEWS(state, news) {
+            state.news = news;
+        },
         // Language 설정 관련
         updateLanguage:(state,newLanguage)=>{
             state.language=newLanguage
@@ -232,6 +237,25 @@ export default new Vuex.Store({
         }
     },
     actions:{
+        FETCH_NEWS:({commit})=> {
+            fetchNewsList()
+            .then(response => {
+                console.log(response);
+                //구조상 actions에서 state로 바로 데이터를 바인딩 할 수 없다.
+                //actions에서는 mutations을 거쳐 state로 가기 때문에
+                //mutations에서 이를 담아주는 함수를 실행해야함.
+                //actions에서는 mutations에 접근할 수 있게 context가 제공된다.
+                //context.commit으로 해당 mutations에 접근할 수 있다.
+                commit('SET_NEWS', response.data[response.data.length()].id); //context.commit('전송할 mutations 함수의 이름', 전송할 데이터);
+            })
+            .catch(error => {
+                console.log(error);
+            })
+        },
+        playSound_charm:({commit})=>{
+            var audio=new Audio(`/src/assets/charm_sound.wav`);
+            audio.play();
+        },
         geofind:({commit})=>{
             // if(!("geolocation" in navigator)) {
             //     state.textContent = 'Geolocation is not available.';
@@ -241,6 +265,7 @@ export default new Vuex.Store({
             
             // get position
             navigator.geolocation.getCurrentPosition(pos => {
+                console.log(pos);
                 commit('generateLoc',pos);
             })
                 // err => {
@@ -253,22 +278,8 @@ export default new Vuex.Store({
             commit('generateNow', date.getHours());
         },
         callWeather:({commit})=>{
-            navigator.geolocation.getCurrentPosition(pos => {
-                commit('generateLoc',pos);
-                //const BASE_URL='https://api.openweathermap.org/data/2.5/weather?q=Incheon&appid=b33642b32e9e7870547c36109f42a437'
                 axios.get(`"https://api.openweathermap.org/data/2.5/weatther?lat=" + ${state.latitude} + "&lon=" + ${state.longitude} + "&appid=b33642b32e9e7870547c36109f42a437"`)
                 //axios.get(`https://api.openweathermap.org/data/2.5/weather?q=Incheon&appid=b33642b32e9e7870547c36109f42a437`)
-                    .then((result)=>{
-                        commit('generateWeatherDes',result.data.weather[0].id);
-                        commit('paletteColor');
-                        //state.city= result.data.sys.country+","+result.data.name+"시";
-                        //state.weather=result.data.weather[0].id;
-                    })
-                    // .catch((result)=>{
-                    //     commit('failWeatherDes',result);
-                    // })
-            })
-                axios.get(`https://api.openweathermap.org/data/2.5/weather?q=Incheon&appid=b33642b32e9e7870547c36109f42a437`)
                 .then((result)=>{
                     commit('generateWeatherDes',result.data.weather[0].id);
                     commit('paletteColor');

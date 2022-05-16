@@ -60,6 +60,7 @@ export default {
         NextBtn,
     },
     created(){
+      this.$store.dispatch('geofind');
       this.$store.dispatch('callWeather');
       this.$store.dispatch('callDate');
   },

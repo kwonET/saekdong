@@ -36,7 +36,7 @@ export default {
   top: 90%;
   left: 50%;
   width: 700px;
-  height: 135px;
+  height: 110px;
   margin-top: -150px;
   margin-left: -350px;
 
@@ -50,8 +50,8 @@ export default {
   top: 90%;
   left: 50%;
   width: 700px;
-  height: 135px;
-  margin-top: -120px;
+  height: 110px;
+  margin-top: -100px;
   margin-left: -350px;
   display: flex;
   align-items: center;

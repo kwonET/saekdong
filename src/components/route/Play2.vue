@@ -33,7 +33,7 @@ export default {
             // You can also use replace() instead of push()
             this.$router.replace('/charm');
         }, 4000),
-        setInterval(this.getPercent,40);
+        setInterval(this.getPercent,200);
     },
     methods:{
       getPercent(){
@@ -63,6 +63,7 @@ export default {
         }
     },
       created(){
+        this.$store.dispatch('geofind');
         this.$store.dispatch('callWeather');
         this.$store.dispatch('callDate');
       },

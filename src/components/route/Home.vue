@@ -13,8 +13,8 @@
           <i class="fa-solid fa-circle-exclamation"></i>
         </div>
         <h3>
-        이 웹사이트는 모바일 기기에 최적화 되어있습니다. <br>
-        모바일 기기에서 접속해주세요. 
+        이 웹사이트는 크롬 브라우저에 최적화 되어있습니다. <br>
+        크롬 브라우저에서 접속해주세요.
         </h3>
       </div>
     </Modal>
@@ -37,7 +37,6 @@
 
 <script scoped>
   import Modal from '../common/Modal.vue'
-
   export default{
     name:'Home',
     data(){
@@ -54,6 +53,12 @@
           this.showModal=true;
         }
       },
+          // Chrome 1 - 79
+      isChrome(){
+        if(!!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime)){
+          this.showModal=true;
+        }
+      }
     },
     computed:{
         timeColor(){
@@ -70,7 +75,7 @@
         }
     },
     created(){
-      //this.$store.dispatch('geofind');
+      this.$store.dispatch('geofind');
       this.$store.dispatch('callWeather');
       this.$store.dispatch('callDate');
       // this.$store.commit('pickTimeColor');

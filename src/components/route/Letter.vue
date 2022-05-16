@@ -92,6 +92,7 @@ export default {
         }
       }
     }
+    this.$store.dispatch('geofind');
     this.$store.dispatch('callWeather');
     this.$store.dispatch('callDate');
   },
