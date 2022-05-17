@@ -92,8 +92,8 @@ export default {
     },
     methods:{
         methodThatForcesUpdate(){ 
-            this.$router.go(this.$router.currentRoute);
-            console.log('update');
+            // this.$router.go(this.$router.currentRoute);
+            this.$router.go(0);
         },
         toNextPage(){
             this.$router.replace('/stick');
@@ -128,13 +128,17 @@ export default {
         this.$store.dispatch('callWeather');
         this.$store.dispatch('callDate');
         this.$store.dispatch('FETCH_NEWS');
-
     },
     mounted(){
-
-        setTimeout(() => {
-            this.methodThatForcesUpdate();
-        }, 0.5);
+        if (localStorage.getItem('reloaded')) {
+        // The page was just reloaded. Clear the value from local storage
+        // so that it will reload the next time this page is visited.
+            localStorage.removeItem('reloaded');
+        } else {
+            // Set a flag so that we know not to reload the page twice.
+            localStorage.setItem('reloaded', '1');
+            location.reload();
+        }
         //하트가 첫번째로 쌓이는 경우 2
         if(this.imgName[2]=="B-9"){
             if((this.point).includes(this.imgName[1])){

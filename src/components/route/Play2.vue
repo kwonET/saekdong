@@ -33,7 +33,7 @@ export default {
             // You can also use replace() instead of push()
             this.$router.replace('/charm');
         }, 4000),
-        setInterval(this.getPercent,200);
+        setInterval(this.getPercent,40);
     },
     methods:{
       getPercent(){

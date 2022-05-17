@@ -278,8 +278,8 @@ export default new Vuex.Store({
             commit('generateNow', date.getHours());
         },
         callWeather:({commit})=>{
-                axios.get(`"https://api.openweathermap.org/data/2.5/weatther?lat=" + ${state.latitude} + "&lon=" + ${state.longitude} + "&appid=b33642b32e9e7870547c36109f42a437"`)
-                //axios.get(`https://api.openweathermap.org/data/2.5/weather?q=Incheon&appid=b33642b32e9e7870547c36109f42a437`)
+                //axios.get(`"https://api.openweathermap.org/data/2.5/weatther?lat=" + ${state.latitude} + "&lon=" + ${state.longitude} + "&appid=b33642b32e9e7870547c36109f42a437"`)
+                axios.get(`https://api.openweathermap.org/data/2.5/weather?q=Incheon&appid=b33642b32e9e7870547c36109f42a437`)
                 .then((result)=>{
                     commit('generateWeatherDes',result.data.weather[0].id);
                     commit('paletteColor');
