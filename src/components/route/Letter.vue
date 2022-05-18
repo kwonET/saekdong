@@ -20,8 +20,8 @@
 
       <div class="btn-container">
         <!-- <RemoveBtn v-if="this.version=='staff'" v-on:clearAll="ClearAllItems"></RemoveBtn> -->
-        <NextBtn v-if="this.language=='ko'" v-bind:propsdata="BtnKorTxt" v-on:toNext="toNextPage()"></NextBtn>
-        <NextBtn v-if="this.language=='en'" v-bind:propsdata="BtnEngTxt" v-on:toNext="toNextPage()"></NextBtn>
+        <NextBtn v-on:toNext="toNextPage()" v-if="this.language=='ko'" v-bind:propsdata="BtnKorTxt"></NextBtn>
+        <NextBtn v-on:toNext="toNextPage()" v-if="this.language=='en'" v-bind:propsdata="BtnEngTxt"></NextBtn>
       </div>
     </div>
   </div>
@@ -67,6 +67,9 @@ export default {
         '--g':this.paletteColor[1][5],
         '--b':this.paletteColor[2][5],
       }
+    },
+    wish(){
+        return this.$store.state.inputWish;
     }
   },
   methods:{
@@ -82,7 +85,7 @@ export default {
     },
     toNextPage(){
         this.$router.replace('/letter2');
-    }
+    },
   },  
    created(){
     if(localStorage.length>0){
@@ -186,18 +189,5 @@ span{
   z-index: 2;
   margin-top:-20%; 
 }
-.input-container input{
-  width:90%;
-  height:100%;
-  //width: calc(100% - 20px); 
-  font-family: 'Gothic A1';
-  font-style: normal;
-  font-weight: 500;
-  font-size: 3.2056vw;
-  line-height: 22px;
-  text-align: center;
-  letter-spacing: -1.5px;
 
-  color: #000000;
-}
 </style>

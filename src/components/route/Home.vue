@@ -1,5 +1,4 @@
 <!--1. 랜딩페이지-->
-
 <template>
   <div id="home" :style="userStyle" style>
     <Modal v-if="showModal" @close="showModal=false">
@@ -13,8 +12,10 @@
           <i class="fa-solid fa-circle-exclamation"></i>
         </div>
         <h3>
-        이 웹사이트는 크롬 브라우저에 최적화 되어있습니다. <br>
-        크롬 브라우저에서 접속해주세요.
+        이 웹사이트는 android: 크롬, ios: WebXR Viewer 브라우저에 최적화 되어 있습니다.
+        기기에 맞는 브라우저에서 접속해주세요. <br><br>
+        This website is optimized for android: Chrome, ios: WebXR Viewer browser. 
+        Please use a browser suitable for your device.
         </h3>
       </div>
     </Modal>
@@ -37,6 +38,9 @@
 
 <script scoped>
   import Modal from '../common/Modal.vue'
+  import browser from 'browser-detect';
+  const result = browser();
+  console.log(browser());
   export default{
     name:'Home',
     data(){
@@ -47,18 +51,24 @@
     // 모바일접속여부를 확인하는 메소드
     methods:{
       isMobile() {
-        if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-          this.showModal=false;
-        } else {
-          this.showModal=true;
-        }
+        // if(browser().mobile==true){
+          if(browser().name=='chrome'||'safari'){
+            // if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+              this.showModal=false;
+            } else {
+              this.showModal=true;
+            }
+        // }
+          // else {
+          //   this.showModal=true;
+          // }
       },
-          // Chrome 1 - 79
-      isChrome(){
-        if(!!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime)){
-          this.showModal=true;
-        }
-      }
+      // Chrome 1 - 79
+      // isChrome(){
+      //   if(!!window.chrome && (!!window.chrome.webstore || !!window.chrome.runtime)){
+      //     this.showModal=true;
+      //   }
+      // }
     },
     computed:{
         timeColor(){
@@ -83,6 +93,7 @@
     },
     //2초 후 자동 라우팅
     mounted() {
+      localStorage.clear();
       this.isMobile()
       if(!this.showModal){
         setTimeout(() => {
@@ -115,7 +126,7 @@ body{
 }
  
 .imgtxt{
-  margin-top:28.0778vh;
+  margin-top:21.0778vh;
   display: flex;
   flex-direction: column;
   align-items: center;

@@ -1,4 +1,3 @@
-
 <template>
   <div id="intro" :style="userStyle" style>
     <!-- <div class="all-container"> -->

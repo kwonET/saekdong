@@ -114,7 +114,7 @@ span{
   font-style: normal;
   font-weight: 500;
   font-size: 5.6075vw;
-  line-height: 4rem;
+  line-height: 4vh;
   /* identical to box height */
 
   text-align: center;

@@ -33,29 +33,23 @@ export default {
 .nextBtnContainer{
   position: absolute;
   content: ''; 
-  top: 83%;
+  top: 93%;
   left: 50%;
-  width: 700px;
-  height: 115px;
-  margin-top: -150px;
-  margin-left: -350px;
+  width: 50%;
+  height: 6%;
+  margin-top: -20%;
+  margin-left: -25%;
+
   background: #EE4C4C;
   border-radius: 3.5097vh;
   cursor:pointer;
-
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 .NextBtn{
   position: absolute;
   content: ''; 
-  top: 90%;
-  left: 50%;
-  width: 700px;
-  height: 110px;
-  margin-top: -100px;
-  margin-left: -350px;
+
+  width: 100%;
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;

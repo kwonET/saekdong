@@ -88,7 +88,9 @@ export default {
                 '--b':this.paletteColor[2][10],
             }
         },
-        
+        objStack(){
+            return this.$store.state.objStk;
+        }
     },
     methods:{
         methodThatForcesUpdate(){ 
@@ -139,6 +141,7 @@ export default {
             localStorage.setItem('reloaded', '1');
             location.reload();
         }
+        console.log(this.objStack);
         //하트가 첫번째로 쌓이는 경우 2
         if(this.imgName[2]=="B-9"){
             if((this.point).includes(this.imgName[1])){

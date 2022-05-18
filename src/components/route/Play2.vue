@@ -171,7 +171,7 @@ span{
   font-style: medium;
   font-weight: 500;
   font-size: 5.3075vw;
-  line-height: 4rem;
+  line-height: 3.3vh;
   text-align: center;
   letter-spacing: -1.5px;
 

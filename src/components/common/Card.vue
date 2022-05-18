@@ -40,7 +40,7 @@ export default {
             this.$store.commit('nextCard');
         }
     },
-    mounted() {
+    created() {
       this.$el.addEventListener('prevCard', event => this.prevCard(event));
       this.$el.addEventListener('nextCard', event => this.nextCard(event));
     }
@@ -93,7 +93,8 @@ export default {
 .img{
     /* img 사이즈 조정 */
     width:100%;
-    height:600px;
+    // height: 100%;
+    height:50vw;
     background-position: center;
     background-size:contain;
     background-repeat: no-repeat;
@@ -106,9 +107,9 @@ export default {
     // position:absolute;
     // top:calc(100% - 450px);
     // padding:70px 150px;
-    width:calc(100% - 200px);
+    width:calc(100% - 300px);
     // height:40px;
-    font-size:40px;
+    font-size:3.5vw;
     color:#333;     
     
 }

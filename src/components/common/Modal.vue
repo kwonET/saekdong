@@ -34,7 +34,7 @@
 }
 .modal-container {
   width: 82.0093vw;
-  height: 8.0994vh;
+  height: 15.0994vh;
   margin: 12.3110vh auto;
   padding: 24px;
   /* padding: 5px 10px; */

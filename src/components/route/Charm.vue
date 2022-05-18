@@ -1,28 +1,32 @@
 <template>
 <div id="charm" :style="userStyle" style>
         <div class="text-container" data-html2canvas-ignore="true">
-            <div class="text-show">
+            <!-- <div class="text-show"> -->
                 <h3 v-if="this.language=='ko'">이 순간, 색동요술봉의 힘으로 당신의 염원이 세계에 녹아 들어 작동하기 시작했습니다!</h3>
                 <h3 v-if="this.language=='en'">Your wish has now become the part of the world with the power of Saekdong Magic Wand!</h3>
-            </div>
+            <!-- </div> -->
         </div>
         <div id="charm-save" class="charm-container" ref="printMe">
-            <img  src="../../assets/charm.png" alt="">
-            <div class="charm-content" >
+            <div class="img-container">
+                <img class="realcharm" src="../../assets/newcharm.png" alt="">
+                <div class="charm-content" >
                 <div class="mini-container">
                     <!-- <div class="mini-rect"></div> -->
                     <div class="mini-shape">
-                        <img class="element" :src="require(`../../assets/pngreplace/Spr_${imgName[2]}.png`)" alt="">
+                        <img class="element" :src="require(`../../assets/pngreplace/Spr_${imgName[0]}.png`)" alt="">
                     </div>
                     <div class="mini-wish" > 
                         <span class="black">{{ userWish }}</span> 
                     </div>
-                </div>
-                <div class="charm-text">
-                    <span class="red" v-if="this.language=='ko'">당신의 염원은<br> 곧 이루어질 것입니다.<br> 색동 요술나라는<br> 당신의 앞날을 축복합니다</span>
-                    <span class="red" v-if="this.language=='en'">Your wish will come<br> true soon. You have<br> the blessing of Saekdong<br> Magic Land for your future.</span>
+
+                    <div class="charm-text">
+                        <span class="red" v-if="this.language=='ko'">당신의 염원은<br> 곧 이루어질 것입니다.<br> 색동 요술나라는<br> 당신의 앞날을 축복합니다</span>
+                        <span class="red" v-if="this.language=='en'">Your wish will come<br> true soon. You have<br> the blessing of Saekdong<br> Magic Land for your future.</span>
+                    </div>
                 </div>
             </div>
+            </div>
+            
         </div>
         <div class="btn-container" data-html2canvas-ignore="true">
             <div class="btn1">
@@ -58,6 +62,9 @@ export default {
         };
     },
     computed:{
+        objStk(){
+            return this.$store.state.objStk;
+        },
         language(){
             return this.$store.state.language;
         },
@@ -77,7 +84,7 @@ export default {
                 '--g':this.paletteColor[1][9],
                 '--b':this.paletteColor[2][9],
             }
-        }
+        },
     },
     methods:{
         toNextPage(){
@@ -161,8 +168,19 @@ export default {
         this.$store.dispatch('callDate');
         this.$store.dispatch('playSound_charm');
     },
-
-}
+    mounted(){
+        console.log(this.objStk);
+        if (localStorage.getItem('reloaded')) {
+        // The page was just reloaded. Clear the value from local storage
+        // so that it will reload the next time this page is visited.
+            localStorage.removeItem('reloaded');
+        } else {
+            // Set a flag so that we know not to reload the page twice.
+            localStorage.setItem('reloaded', '1');
+            location.reload();
+        }
+    }
+}  
 
 
 </script>
@@ -186,9 +204,8 @@ body{
     align-items: center;
     text-align: center;
     width:80%;
-    height:30%;
+    height:20%;
     margin-left:10%;
-    margin-top:0%;
 }
 /* .text-show{
     width:100%;
@@ -198,25 +215,30 @@ h3{
     font-style: medium;
     font-weight: 400;
     font-size: 4.4393vw;
-    line-height: 3.5rem;
+    line-height: 3.3vh;
     text-align: center;
     letter-spacing: -1.5px;
 
     color: #FFFFFF;
 }
 #charm-save{
-    top:22%;
-    left:20%;
+    width:60%;
+    /* height:78%; */
+}
+.img-container{
+    position: relative; padding-top: 200%; /* 1:1 ratio */ overflow: hidden;
+    left:35%;
     width:100%;
     height:100%;
 }
-img{
-    position: absolute;
+.realcharm{
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0; width: 100%; height: auto;
+    /* position: absolute;
     top:22%;
     left:20%;
     width:60%;
     height:50%;
-    z-index: 1;
+    z-index: 1; */
 }
 .charm-content{
     width:100%;
@@ -228,10 +250,13 @@ img{
     flex-direction: column;
     align-items: center;
 
-    top:32%;
+    top:25%;
     left:20%;
     width:60%;
-    height:50%;
+    height:60%;
+}
+.element{
+    width:100%;
 }
 /* .mini-rect{
     position: absolute;
@@ -249,8 +274,7 @@ img{
     height: 400px; */
 
     width:100%;
-    height:40%;
-    
+    top:-10%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -262,7 +286,7 @@ img{
 
     height:10%;
     width:100%;
-    top: 32%;
+    top: 34%;
 
     display: flex;
     flex-direction: column;
@@ -270,11 +294,12 @@ img{
     justify-content: center;
 }
 .black{
+    width:100%;
     margin:0 auto;
     font-style: medium;
     font-weight: 500;
     font-size: 3.1vw;
-    line-height: 2rem;
+    line-height:  2.8vh;
     text-align: center;
     letter-spacing: -1.5px;
 
@@ -287,10 +312,9 @@ img{
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    top:36%;
-    left:20%;
-    width:60%;
-    height:50%;
+    top:45%;
+    width:100%;
+    height:30%;
 }
 .red{
     margin:0 auto;
@@ -298,7 +322,7 @@ img{
     font-style: medium;
     font-weight: 500;
     font-size: 3.1vw;
-    line-height: 2rem;
+    line-height:  2vh;
     text-align: center;
     letter-spacing: -1.5px;
 

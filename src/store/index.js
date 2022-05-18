@@ -21,6 +21,7 @@ export default new Vuex.Store({
         createPersistedState(),
     ],
     state:{
+        objectStack:[],
         latitude: '',
         longitude: '',
         //textContent: '',
@@ -39,6 +40,7 @@ export default new Vuex.Store({
         language: 'ko',
         currentIndex:0,
         news:0,
+        wish:'',
         color:[
             { 
                 feature:'아침',
@@ -77,10 +79,10 @@ export default new Vuex.Store({
             {
                 description:
                 [
-                    "여기 색동 요술봉은 염원을 가진 사람을 도와 그들의 소원을 이루어주는 기적의 마법이 담겨 있습니다.",
-                    "Here a wishful Saekdong Magic Wand shows a miracle that helps people with desire and to make their wishes come true."    
+                    "색동 요술봉은 염원을 가진 사람을 도와 그들의 소원을 이루어주는 기적의 마법이 담겨 있습니다.",
+                    "A wishful Saekdong Magic Wand shows a miracle that helps people with desire and to make their wishes come true."    
                 ],
-                img:"/carousel1.png"
+                img:"/carousel3.png"
             },
             {
                 description:
@@ -129,9 +131,16 @@ export default new Vuex.Store({
         },
         paletterColor: state=>{
             return state.palette;
-        }
+        },
+        objStk: state=>{
+            return state.objectStack;
+        },
+
     },
     mutations:{
+        testObjStk:state=>{
+            state.objectStack = ['C-2','A-8','B-9'];
+        },
         SET_NEWS(state, news) {
             state.news = news;
         },
@@ -276,6 +285,8 @@ export default new Vuex.Store({
             //time
             var date=new Date();
             commit('generateNow', date.getHours());
+
+            commit('testObjStk');
         },
         callWeather:({commit})=>{
                 //axios.get(`"https://api.openweathermap.org/data/2.5/weatther?lat=" + ${state.latitude} + "&lon=" + ${state.longitude} + "&appid=b33642b32e9e7870547c36109f42a437"`)

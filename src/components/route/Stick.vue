@@ -47,7 +47,10 @@ export default {
               '--g':this.paletteColor[1][10],
               '--b':this.paletteColor[2][10],
           }
-      }
+      },
+        objStack(){
+            return this.$store.state.objStk;
+    }
   },
   methods:{
     makePDF(){

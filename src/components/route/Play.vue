@@ -73,7 +73,7 @@ span{
     font-style: normal;
     font-weight: 500;
     font-size: 5.6075vw;
-    line-height: 4rem;
+    line-height: 3.3vh;
     text-align: center;
     letter-spacing: -1.5px;
 
