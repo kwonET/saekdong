@@ -14,7 +14,7 @@
                     <div class="mini-container">
                         <!-- <div class="mini-rect"></div> -->
                         <div class="mini-shape">
-                            <img class="element" :src="require(`../../assets/pngreplace/Spr_${imgName[0]}.png`)" alt="">
+                            <img class="element" :src="require(`../../assets/pngreplace/Spr_${this.stack[0]}.png`)" alt="">
                         </div>
                         <div class="mini-wish" > 
                             <span class="black">{{ userWish }}</span> 
