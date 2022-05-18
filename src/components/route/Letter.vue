@@ -10,10 +10,10 @@
         <div class="z-container">
           <div class="img-container">
             <img src='../../assets/letter.png' alt="">
-          </div>
-          <div class="input-container" style="text-overflow:auto;">
-            <Input v-on:addInputItem="addOneItem"></Input>
-            <!-- <input type="text" v-model="newInputItem" v-on:keyup.enter="addInput" class="letter-input"> -->
+            <div class="input-container" style="text-overflow:auto;">
+              <Input v-on:addInputItem="addOneItem"></Input>
+              <!-- <input type="text" v-model="newInputItem" v-on:keyup.enter="addInput" class="letter-input"> -->
+            </div>
           </div>
         </div>
       </div>

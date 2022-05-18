@@ -20,8 +20,11 @@
       </div>
     </Modal>
 
-    <div class="imgtxt">
-        <img src="../../assets/landing1.png">
+  <div class="container">
+    <div class="hole"></div>
+      <div class="imgtxt">
+          <img class="rabit" src="../../assets/landing1.png">
+      </div>
       <div class="txtarea">
         <div class="line"></div>
         <div class="txt">
@@ -55,9 +58,9 @@
           if(browser().name=='chrome'||'safari'){
             // if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
               this.showModal=false;
-            } else {
-              this.showModal=true;
-            }
+          } else {
+            this.showModal=true;
+          }
         // }
           // else {
           //   this.showModal=true;
@@ -109,7 +112,7 @@
 
 </script>
 
-<style scoped>
+<style>
 
 body{
   margin:0;
@@ -124,23 +127,44 @@ body{
   /* background: linear-gradient(rgb(var(--s-r),var(--s-g),var(--s-b)),rgb(var(--e-r),var(--e-g),var(--e-b))); */
   /* background: linear-gradient(rgb(v-bind(s_r),v-bind(s_g),v-bind(s_b)),rgb(v-bind(e_r),v-bind(e_g),v-bind(e_b))); */
 }
- 
-.imgtxt{
-  margin-top:21.0778vh;
+
+.container{
+    width:100%;
+    height:100%;
+
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+hole{
+  height:30%;
+}
+.imgtxt{
+  height:50%;
 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   /* overflow: hidden; */
-  text-align: center;
+  text-align: bottom;
+}
+.rabbit{
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0; width: 50%; height: auto;
+    /* position: absolute;
+    top:22%;
+    left:20%;
+    width:60%;
+    height:50%;
+    z-index: 1; */
 }
 img {
   max-width:58.8785vw;
   max-height:58.8785vw;
 }
 .txtarea{
-  margin-top:4.9676vh;
+  height:40%;
   width:70%;
 }
 .txt{

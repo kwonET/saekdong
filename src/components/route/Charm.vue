@@ -1,5 +1,6 @@
 <template>
 <div id="charm" :style="userStyle" style>
+    <div class="nonBtn">
         <div class="text-container" data-html2canvas-ignore="true">
             <!-- <div class="text-show"> -->
                 <h3 v-if="this.language=='ko'">이 순간, 색동요술봉의 힘으로 당신의 염원이 세계에 녹아 들어 작동하기 시작했습니다!</h3>
@@ -10,36 +11,36 @@
             <div class="img-container">
                 <img class="realcharm" src="../../assets/newcharm.png" alt="">
                 <div class="charm-content" >
-                <div class="mini-container">
-                    <!-- <div class="mini-rect"></div> -->
-                    <div class="mini-shape">
-                        <img class="element" :src="require(`../../assets/pngreplace/Spr_${imgName[0]}.png`)" alt="">
-                    </div>
-                    <div class="mini-wish" > 
-                        <span class="black">{{ userWish }}</span> 
-                    </div>
+                    <div class="mini-container">
+                        <!-- <div class="mini-rect"></div> -->
+                        <div class="mini-shape">
+                            <img class="element" :src="require(`../../assets/pngreplace/Spr_${imgName[0]}.png`)" alt="">
+                        </div>
+                        <div class="mini-wish" > 
+                            <span class="black">{{ userWish }}</span> 
+                        </div>
 
-                    <div class="charm-text">
-                        <span class="red" v-if="this.language=='ko'">당신의 염원은<br> 곧 이루어질 것입니다.<br> 색동 요술나라는<br> 당신의 앞날을 축복합니다</span>
-                        <span class="red" v-if="this.language=='en'">Your wish will come<br> true soon. You have<br> the blessing of Saekdong<br> Magic Land for your future.</span>
+                        <div class="charm-text">
+                            <span class="red" v-if="this.language=='ko'">당신의 염원은<br> 곧 이루어질 것입니다.<br> 색동 요술나라는<br> 당신의 앞날을 축복합니다</span>
+                            <span class="red" v-if="this.language=='en'">Your wish will come<br> true soon. You have<br> the blessing of Saekdong<br> Magic Land for your future.</span>
+                        </div>
                     </div>
                 </div>
             </div>
-            </div>
-            
-        </div>
-        <div class="btn-container" data-html2canvas-ignore="true">
-            <div class="btn1">
-                <SaveBtn v-if="this.language=='ko'" v-bind:propsdata="SaveKorTxt" v-on:toNext="makePDF()"></SaveBtn>
-                <SaveBtn v-if="this.language=='en'" v-bind:propsdata="SaveEngTxt" v-on:toNext="makePDF()"></SaveBtn>
-            </div>
-            <div class="btn2">
-                <!-- 다음버튼 -->
-                <NextBtn v-if="this.language=='ko'" v-bind:propsdata="BtnKorTxt" v-on:toNext="toNextPage()"></NextBtn>
-                <NextBtn v-if="this.language=='en'" v-bind:propsdata="BtnEngTxt" v-on:toNext="toNextPage()"></NextBtn>
-            </div>
         </div>
     </div>
+    <div class="btn-container" data-html2canvas-ignore="true">
+        <div class="btn1">
+            <SaveBtn v-if="this.language=='ko'" v-bind:propsdata="SaveKorTxt" v-on:toNext="makePDF()"></SaveBtn>
+            <SaveBtn v-if="this.language=='en'" v-bind:propsdata="SaveEngTxt" v-on:toNext="makePDF()"></SaveBtn>
+        </div>
+        <div class="btn2">
+            <!-- 다음버튼 -->
+            <NextBtn v-if="this.language=='ko'" v-bind:propsdata="BtnKorTxt" v-on:toNext="toNextPage()"></NextBtn>
+            <NextBtn v-if="this.language=='en'" v-bind:propsdata="BtnEngTxt" v-on:toNext="toNextPage()"></NextBtn>
+        </div>
+    </div>
+</div>
 </template>
 
 <script>
@@ -62,8 +63,8 @@ export default {
         };
     },
     computed:{
-        objStk(){
-            return this.$store.state.objStk;
+        stack () {
+            return this.$store.state.objectStack;
         },
         language(){
             return this.$store.state.language;
@@ -197,6 +198,9 @@ body{
     height:100%;
     background-color: rgb(var(--r),var(--g),var(--b));
 }
+.nonBtn{
+    height:70%;
+}
 .text-container{
     display:flex;
     flex-direction: column;
@@ -227,12 +231,12 @@ h3{
 }
 .img-container{
     position: relative; padding-top: 200%; /* 1:1 ratio */ overflow: hidden;
-    left:35%;
+    left:45%;
     width:100%;
     height:100%;
 }
 .realcharm{
-    position: absolute; top: 0; left: 0; right: 0; bottom: 0; width: 100%; height: auto;
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0; height: 60%; width: auto;
     /* position: absolute;
     top:22%;
     left:20%;
@@ -240,18 +244,15 @@ h3{
     height:50%;
     z-index: 1; */
 }
-.charm-content{
-    width:100%;
-}
 .mini-container{
     position: absolute;
     z-index: 2;
     display: flex;
     flex-direction: column;
     align-items: center;
-
-    top:25%;
-    left:20%;
+    justify-content: center;
+    top:10%;
+    left:10%;
     width:60%;
     height:60%;
 }
@@ -273,8 +274,8 @@ h3{
     /* width: 400px;
     height: 400px; */
 
-    width:100%;
-    top:-10%;
+    width:70%;
+    top:1%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -329,6 +330,7 @@ h3{
     color: #FF0600;
 }
 .btn-container{
+    height:30%;
     display: flex;
     flex-direction: column;
 }

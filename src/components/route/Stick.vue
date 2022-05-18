@@ -1,13 +1,13 @@
 <template>
     <div id="stick" :style="userStyle" style>
       <div class="wish-stick">
-        <img id="element" :src="require(`../../assets/pngreplace/Spr_${imgName[0]}.png`)" alt="">
+        <img id="element" :src="require(`../../assets/pngreplace/Spr_${this.stack[0]}.png`)" alt="">
         <img id="element" 
             :class="{'heart_m_p': mid_point === true,'mid_b_b' : mid_between === true,}"
-            :src="require(`../../assets/pngreplace/Spr_${imgName[1]}.png`)" alt="">
+            :src="require(`../../assets/pngreplace/Spr_${this.stack[1]}.png`)" alt="">
         <img id="element" 
             :class="{'heart_b_p': bottom_point === true,'heart_b_b' : bottom_between === true,}"
-            :src="require(`../../assets/pngreplace/Spr_${imgName[2]}.png`)" alt="">
+            :src="require(`../../assets/pngreplace/Spr_${this.stack[2]}.png`)" alt="">
         <img class="stick" src="../../assets/pngreplace/Spr_Stick.png" alt="">
       </div>
     </div>
@@ -31,6 +31,9 @@ export default {
         }
     },
     computed:{
+        stack () {
+            return this.$store.state.objectStack;
+        },
       timeColor(){
           return this.$store.state.time_color;
       },
@@ -88,26 +91,26 @@ export default {
   },
   mounted(){
         //하트가 첫번째로 쌓이는 경우 2
-        if(this.imgName[2]=="B-9"){
-            if((this.point).includes(this.imgName[1])){
+        if(this.stack[2]=="B-9"){
+            if((this.point).includes(this.stack[1])){
                 this.bottomHeartP();
             }
-            else if((this.between).includes(this.imgName[1])){
+            else if((this.between).includes(this.stack[1])){
                 this.bottomHeartB();
             }
-            else if((this.none).includes(this.imgName[1])){
+            else if((this.none).includes(this.stack[1])){
                 this.bottomHeartN();
             }
         }  
         //하트가 두번째로 쌓이는 경우 1
-        else if(this.imgName[1]=="B-9"){
-            if((this.point).includes(this.imgName[0])){
+        else if(this.stack[1]=="B-9"){
+            if((this.point).includes(this.stack[0])){
                 this.midHeartP();
             }
-            else if((this.between).includes(this.imgName[0])){
+            else if((this.between).includes(this.stack[0])){
                 this.midHeartB();
             }
-            else if((this.none).includes(this.imgName[0])){
+            else if((this.none).includes(this.stack[0])){
                 this.midHeartN();
             }
         }  

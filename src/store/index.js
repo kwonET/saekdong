@@ -21,7 +21,7 @@ export default new Vuex.Store({
         createPersistedState(),
     ],
     state:{
-        objectStack:[],
+        objectStack:['C-2','A-8','B-9'],
         latitude: '',
         longitude: '',
         //textContent: '',
@@ -138,9 +138,6 @@ export default new Vuex.Store({
 
     },
     mutations:{
-        testObjStk:state=>{
-            state.objectStack = ['C-2','A-8','B-9'];
-        },
         SET_NEWS(state, news) {
             state.news = news;
         },
@@ -285,8 +282,6 @@ export default new Vuex.Store({
             //time
             var date=new Date();
             commit('generateNow', date.getHours());
-
-            commit('testObjStk');
         },
         callWeather:({commit})=>{
                 //axios.get(`"https://api.openweathermap.org/data/2.5/weatther?lat=" + ${state.latitude} + "&lon=" + ${state.longitude} + "&appid=b33642b32e9e7870547c36109f42a437"`)

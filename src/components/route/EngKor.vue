@@ -120,6 +120,8 @@ body{
   /*한영선택 부분 크기 설정*/
   margin:0 auto;
   flex-basis: 343px;
+  height:80%;
+  width:100%;
 }
 .txt-container{
   /* font-family: Gothic A1; */
@@ -139,6 +141,7 @@ body{
 .eng-txt{
   font-size:5.1402vw;
 }
+
 .btn-container{
   width:67.5234vw;
   margin:0 auto;
